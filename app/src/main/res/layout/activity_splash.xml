@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qinmr.util.ui.home.SplashActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_github" />
+
+    <TextView
+        android:id="@+id/tv_tag_skip"
+        android:layout_width="@dimen/px_160"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="@dimen/px_40"
+        android:layout_marginTop="@dimen/px_60"
+        android:background="@drawable/red_frame"
+        android:enabled="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/px_10"
+        android:paddingTop="@dimen/px_10"
+        android:textColor="#ffcc0000" />
+
+</FrameLayout>

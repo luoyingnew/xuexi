@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Util</string>
+
+    <!-- activity menu -->
+    <string name="news">新闻</string>
+    <string name="photo">图片</string>
+    <string name="video">视频</string>
+    <string name="tools">设置</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="about">关于</string>
+    <string name="share">Share</string>
+    <string name="send">Send</string>
+    <string name="shop">商城</string>
+
+
+</resources>

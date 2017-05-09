@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="LabelView">
+        <attr name="lv_text" format="string" />
+        <attr name="lv_text_color" format="color" />
+        <attr name="lv_text_size" format="dimension" />
+        <attr name="lv_text_bold" format="boolean" />
+        <attr name="lv_text_all_caps" format="boolean" />
+        <attr name="lv_background_color" format="color" />
+        <attr name="lv_min_size" format="dimension" />
+        <attr name="lv_padding" format="dimension" />
+        <attr name="lv_gravity" format="enum">
+            <enum name="TOP_LEFT" value="51" />
+            <enum name="TOP_RIGHT" value="53" />
+            <enum name="BOTTOM_LEFT" value="83" />
+            <enum name="BOTTOM_RIGHT" value="85" />
+        </attr>
+        <attr name="lv_fill_triangle" format="boolean" />
+    </declare-styleable>
+</resources>
