@@ -63,6 +63,11 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
     }
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     public void initViews() {
         //检测网络状态
         showNetView();
@@ -121,7 +126,10 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
         }
     }
 
-
+    /**
+     * 增加头部的信息
+     * @param newsInfo
+     */
     private void addHeadView(NewsInfo newsInfo) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.head_news_list, null);
         mAdSlider = (SliderLayout) view.findViewById(R.id.slider_ads);

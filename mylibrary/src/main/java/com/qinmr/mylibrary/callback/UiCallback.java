@@ -11,6 +11,8 @@ public interface UiCallback {
     @LayoutRes
     int attachLayoutRes();
 
+    void initData();
+
     void initViews();
 
     void updateViews();

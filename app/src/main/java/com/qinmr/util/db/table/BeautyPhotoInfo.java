@@ -1,6 +1,7 @@
 package com.qinmr.util.db.table;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * Created by long on 2016/9/2.
  * 美女图片
  */
-public class BeautyPhotoInfo implements Serializable {
+public class BeautyPhotoInfo implements Parcelable, Serializable {
 
     /**
      * adtype : 0
@@ -114,6 +115,22 @@ public class BeautyPhotoInfo implements Serializable {
         isDownload = download;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.imgsrc);
+        dest.writeString(this.pixel);
+        dest.writeString(this.docid);
+        dest.writeString(this.title);
+        dest.writeByte(this.isLove ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isPraise ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isDownload ? (byte) 1 : (byte) 0);
+    }
+
     public boolean getIsDownload() {
         return this.isDownload;
     }
@@ -152,7 +169,7 @@ public class BeautyPhotoInfo implements Serializable {
     }
 
     public BeautyPhotoInfo(String imgsrc, String pixel, String docid, String title,
-            boolean isLove, boolean isPraise, boolean isDownload) {
+                           boolean isLove, boolean isPraise, boolean isDownload) {
         this.imgsrc = imgsrc;
         this.pixel = pixel;
         this.docid = docid;
@@ -161,6 +178,18 @@ public class BeautyPhotoInfo implements Serializable {
         this.isPraise = isPraise;
         this.isDownload = isDownload;
     }
+
+    public static final Creator<BeautyPhotoInfo> CREATOR = new Creator<BeautyPhotoInfo>() {
+        @Override
+        public BeautyPhotoInfo createFromParcel(Parcel source) {
+            return new BeautyPhotoInfo(source);
+        }
+
+        @Override
+        public BeautyPhotoInfo[] newArray(int size) {
+            return new BeautyPhotoInfo[size];
+        }
+    };
 
     @Override
     public boolean equals(Object o) {

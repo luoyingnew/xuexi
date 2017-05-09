@@ -49,8 +49,12 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
     }
 
     @Override
-    public void initViews() {
+    public void initData() {
         channelHelper = new ChannelHelper(this);
+    }
+
+    @Override
+    public void initViews() {
         initToolBar(mToolbar, true, "栏目管理");
         mCheckedAdapter = new ManageAdapter(ChannelActivity.this);
         mUncheckedAdapter = new ManageAdapter(ChannelActivity.this);

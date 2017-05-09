@@ -40,6 +40,11 @@ public class PhotoMainFragment extends BaseFragment {
     }
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     public void initViews() {
         initToolBar(mToolBar, true, "图片");
         mPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());

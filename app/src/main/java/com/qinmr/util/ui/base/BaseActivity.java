@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.qinmr.mylibrary.callback.IBaseView;
 import com.qinmr.mylibrary.callback.UiCallback;
@@ -35,6 +36,7 @@ public abstract class BaseActivity extends AutoLayoutActivity implements UiCallb
         super.onCreate(savedInstanceState);
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
+        initData();
         initViews();
         updateViews();
     }
@@ -131,6 +133,15 @@ public abstract class BaseActivity extends AutoLayoutActivity implements UiCallb
             mEmptyLayout.setStatus(LoadingLayout.Error);
             mEmptyLayout.setOnReloadListener(onRetryListener);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

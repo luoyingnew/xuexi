@@ -3,10 +3,15 @@ package com.qinmr.util.util;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.qinmr.util.api.NewsUtils;
 import com.qinmr.util.api.bean.NewsInfo;
+import com.qinmr.util.ui.news.article.NewsArticleActivity;
+import com.qinmr.util.ui.news.photoset.PhotoSetActivity;
+import com.qinmr.util.ui.news.special.SpecialActivity;
 
 /**
  * Created by long on 2016/8/24.
@@ -40,8 +45,17 @@ public final class SliderHelper {
                         public void onSliderClick(BaseSliderView slider) {
                             if (slider.getBundle() != null) {
                                 NewsInfo.AdData adData = slider.getBundle().getParcelable(SLIDER_KEY);
+                                if (adData != null) {
+                                    if (NewsUtils.isNewsPhotoSet(adData.getTag())) {
+                                        PhotoSetActivity.launch(context, adData.getUrl());
+                                    } else if (NewsUtils.isNewsSpecial(adData.getTag())) {
+                                        SpecialActivity.launch(context, adData.getUrl());
+                                    } else {
+//                                        NewsDetailActivity.launch(context, adData.getUrl());
+                                        NewsArticleActivity.launch(context, adData.getUrl());
+                                    }
+                                }
                             }
-
                         }
                     });
 
@@ -52,7 +66,7 @@ public final class SliderHelper {
         }
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Tablet);
-//        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(4000);
     }
 }

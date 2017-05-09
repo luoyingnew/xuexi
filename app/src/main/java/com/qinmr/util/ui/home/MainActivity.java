@@ -63,6 +63,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     public void initViews() {
         initDrawerLayout(mDrawerLayout, mNavView);
         mSparseTags.put(R.id.nav_news, "News");

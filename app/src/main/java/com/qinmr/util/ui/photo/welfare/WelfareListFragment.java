@@ -1,7 +1,5 @@
 package com.qinmr.util.ui.photo.welfare;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
 import com.qinmr.mylibrary.callback.ILoadDataView;
@@ -34,8 +32,7 @@ public class WelfareListFragment extends BaseFragment implements ILoadDataView<L
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initData() {
         helper = new WelfareListHelper(this);
     }
 

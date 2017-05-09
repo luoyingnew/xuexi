@@ -34,6 +34,11 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     public void initViews() {
         handler.sendEmptyMessage(0);
     }

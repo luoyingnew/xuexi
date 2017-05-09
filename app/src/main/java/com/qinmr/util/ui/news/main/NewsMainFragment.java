@@ -47,6 +47,11 @@ public class NewsMainFragment extends BaseFragment {
     }
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     public void initViews() {
         initToolBar(mToolBar, true, "新闻");
         setHasOptionsMenu(true);

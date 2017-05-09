@@ -1,7 +1,6 @@
 package com.qinmr.util.ui.video.list;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
 import com.qinmr.mylibrary.adapter.BaseAdapter;
@@ -42,17 +41,16 @@ public class VideoListFragment extends BaseFragment implements ILoadDataView<Lis
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int attachLayoutRes() {
+        return R.layout.fragment_photo_list;
+    }
+
+    @Override
+    public void initData() {
         if (getArguments() != null) {
             mVideoId = getArguments().getString(VIDEO_ID_KEY);
             helper = new VideoListHelper(this, mVideoId);
         }
-    }
-
-    @Override
-    public int attachLayoutRes() {
-        return R.layout.fragment_photo_list;
     }
 
     @Override

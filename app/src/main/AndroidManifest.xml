@@ -25,8 +25,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".ui.home.WebViewActivity">
-        </activity>
         <activity
             android:name=".ui.home.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -37,7 +35,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.home.SplashActivity" />
+        <activity android:name=".ui.home.SplashActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.news.special.SpecialActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.news.channel.ChannelActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.news.photoset.PhotoSetActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.news.article.NewsArticleActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.photo.bigphoto.BigPhotoActivity" android:screenOrientation="portrait"/>
+
 
         <meta-data
             android:name="design_width"
@@ -45,12 +50,6 @@
         <meta-data
             android:name="design_height"
             android:value="1280" />
-
-        <activity android:name=".ui.news.special.SpecialActivity" />
-        <activity android:name=".ui.news.channel.ChannelActivity" />
-        <activity android:name=".ui.news.photoset.PhotoSetActivity" />
-        <activity android:name=".ui.news.article.NewsArticleActivity" />
-
     </application>
 
 </manifest>

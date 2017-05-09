@@ -92,12 +92,17 @@ public class NewsArticleActivity extends BaseSwipeBackActivity implements INewsA
     }
 
     @Override
-    public void initViews() {
+    public void initData() {
         mNewsId = getIntent().getStringExtra(NEWS_ID_KEY);
         helper = new NewsArticleHelper(this,mNewsId);
         mToolbarHeight = getResources().getDimensionPixelSize(R.dimen.news_detail_toolbar_height);
         mTopBarHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_height);
+    }
+
+    @Override
+    public void initViews() {
         mMinScrollSlop = ViewConfiguration.get(this).getScaledTouchSlop();
+        //隐藏自定义的actionBar
         ViewCompat.setTranslationY(mLlTopBar, -mTopBarHeight);
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override

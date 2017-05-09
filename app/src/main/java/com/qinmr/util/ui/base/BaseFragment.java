@@ -57,6 +57,7 @@ public abstract class BaseFragment extends Fragment implements UiCallback, IBase
             mRootView = inflater.inflate(attachLayoutRes(), null);
             mContext = getContext();
             ButterKnife.bind(this, mRootView);
+            initData();
             initViews();
             initSwipeRefresh();
         }

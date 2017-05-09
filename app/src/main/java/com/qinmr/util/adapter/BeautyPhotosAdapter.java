@@ -11,9 +11,11 @@ import com.qinmr.mylibrary.adapter.BaseAdapter;
 import com.qinmr.mylibrary.adapter.BaseViewHolder;
 import com.qinmr.util.R;
 import com.qinmr.util.db.table.BeautyPhotoInfo;
+import com.qinmr.util.ui.photo.bigphoto.BigPhotoActivity;
 import com.qinmr.util.util.DefIconFactory;
 import com.qinmr.util.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,7 +50,7 @@ public class BeautyPhotosAdapter extends BaseAdapter<BeautyPhotoInfo> {
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, BeautyPhotoInfo item) {
+    protected void convert(final BaseViewHolder holder, BeautyPhotoInfo item) {
         final ImageView ivPhoto = holder.getView(R.id.iv_photo);
         int photoHeight = StringUtils.calcPhotoHeight(item.getPixel(), mPhotoWidth);
         // 接口返回的数据有像素分辨率，根据这个来缩放图片大小
@@ -62,9 +64,9 @@ public class BeautyPhotosAdapter extends BaseAdapter<BeautyPhotoInfo> {
             @Override
             public void onClick(View v) {
                 if (mFragment != null) {
-//                    BigPhotoActivity.launchForResult(mFragment, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
+                    BigPhotoActivity.launchForResult(mFragment, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
                 } else {
-//                    BigPhotoActivity.launch(mContext, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
+                    BigPhotoActivity.launch(mContext, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
                 }
             }
         });

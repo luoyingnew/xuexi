@@ -46,9 +46,13 @@ public class SpecialActivity extends BaseSwipeBackActivity implements ISpecialVi
     }
 
     @Override
-    public void initViews() {
+    public void initData() {
         mSpecialId = getIntent().getStringExtra(SPECIAL_KEY);
         helper = new SpecialHelper(this, mSpecialId);
+    }
+
+    @Override
+    public void initViews() {
         initToolBar(mToolbar, true, "");
 
 //        ScaleInAnimationAdapter animAdapter = new ScaleInAnimationAdapter(mSpecialAdapter);

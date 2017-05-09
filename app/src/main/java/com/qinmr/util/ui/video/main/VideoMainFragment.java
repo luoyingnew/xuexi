@@ -52,6 +52,11 @@ public class VideoMainFragment extends BaseFragment {
     }
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     public void initViews() {
         initToolBar(mToolBar, true, "视频");
         mPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());

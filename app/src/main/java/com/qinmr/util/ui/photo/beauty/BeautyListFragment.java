@@ -1,13 +1,10 @@
 package com.qinmr.util.ui.photo.beauty;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.qinmr.mylibrary.callback.ILoadDataView;
 import com.qinmr.mylibrary.listener.OnRequestDataListener;
-import com.qinmr.mylibrary.logger.KLog;
 import com.qinmr.util.R;
 import com.qinmr.util.adapter.BeautyPhotosAdapter;
 import com.qinmr.util.db.table.BeautyPhotoInfo;
@@ -38,8 +35,7 @@ public class BeautyListFragment extends BaseFragment implements ILoadDataView<Li
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initData() {
         helper = new BeautyListHelper(this);
     }
 

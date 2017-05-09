@@ -64,9 +64,13 @@ public class PhotoSetActivity extends BaseActivity implements IPhotoSetView {
     }
 
     @Override
-    public void initViews() {
+    public void initData() {
         mPhotoSetId = getIntent().getStringExtra(PHOTO_SET_KEY);
         helper = new PhotoSetHelper(this, mPhotoSetId);
+    }
+
+    @Override
+    public void initViews() {
         initToolBar(mToolbar, true, "");
     }
 
