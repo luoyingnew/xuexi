@@ -16,7 +16,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.qinmr.mylibrary.view.CircleImageView
+        <com.qinmr.mvp.widgets.CircleImageView
             android:layout_width="@dimen/px_160"
             android:layout_height="@dimen/px_160"
             android:src="@drawable/ic_photo_empty"

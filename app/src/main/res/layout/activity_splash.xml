@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.qinmr.util.ui.home.SplashActivity">
+    tools:context="com.qinmr.mvp.ui.home.SplashActivity">
 
     <ImageView
         android:layout_width="match_parent"

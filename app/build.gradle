@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt' //添加这行
+apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.compileSdk
+    buildToolsVersion rootProject.ext.buildTools
     defaultConfig {
         applicationId "com.qinmr.util"
-        minSdkVersion 17
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,70 +22,63 @@ android {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
         }
+        greendao{
+            schemaVersion 1
+//            targetGenDir 'src/main/java'
+        }
     }
 }
 
 dependencies {
-//    compile fileTree(include: ['*.jar'], dir: 'libs')
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
-//    compile project(':mylibrary')
-//
-//    testCompile 'junit:junit:4.12'
-//
+    //    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    //        exclude group: 'com.android.support', module: 'support-annotations'
+    //    })
+    //    testCompile 'junit:junit:4.12'
+    //android自带的卡片特效View
+    compile 'com.android.support:cardview-v7:25.3.1'
+
+    compile project(':UtilLibrary')
+    compile project(':recyclerviewhelper')
 //    //调试数据库用的
 //    debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
-//
-//    //添加这行
-//    compile 'com.jakewharton:butterknife:8.5.1'
-//    apt 'com.jakewharton:butterknife-compiler:8.5.1'
-//
-//    // recyclerview-animators
-//    compile 'jp.wasabeef:recyclerview-animators:2.2.3'
-//    //okgo
-//    compile 'com.lzy.net:okgo:+'
-//    compile 'com.lzy.net:okrx:+'
-//    compile 'com.lzy.net:okserver:+'
-//
-//    compile 'com.github.bumptech.glide:glide:3.7.0'
-//    compile 'com.android.support:cardview-v7:26.0.0-alpha1'
-//    compile 'org.greenrobot:eventbus:3.0.0'
-
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile project(':mylibrary')
-
-    testCompile 'junit:junit:4.12'
-
-    //调试数据库用的
-    debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
-
-    //添加这行
+    // greendao
+    compile 'org.greenrobot:greendao:3.1.0'
+    // rxjava
+    compile 'io.reactivex:rxjava:1.1.9'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.trello:rxlifecycle:1.0'
+    compile 'com.trello:rxlifecycle-components:1.0'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+    // retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //屏幕适配
+    compile 'com.zhy:autolayout:1.4.5'
+    //json解析
+    compile 'com.google.code.gson:gson:2.7'
+    //butterknife简化组件的初始化和绑定
     compile 'com.jakewharton:butterknife:8.5.1'
     apt 'com.jakewharton:butterknife-compiler:8.5.1'
-
-    // recyclerview-animators
+    // recyclerview加载item的动画库
     compile 'jp.wasabeef:recyclerview-animators:2.2.3'
     //okgo
     compile 'com.lzy.net:okgo:+'
     compile 'com.lzy.net:okrx:+'
     compile 'com.lzy.net:okserver:+'
-
+    //加载图片很不错
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:cardview-v7:26.0.0-alpha1'
+    //比较方便通讯
     compile 'org.greenrobot:eventbus:3.0.0'
-
-    // dragsloplayout
+    // dragsloplayout 处理新闻类型详情或者类似的特效库
     compile 'com.github.Rukey7:DragSlopLayout:1.0.3'
     // photoview
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
-    // html text
+    // html text 用来解析Htnl代码
     compile 'com.zzhoujay.richtext:richtext:2.0.9'
-
-    // slider
+    // slider 一个专门做Banner位图片特效的库
     compile 'com.daimajia.slider:library:1.1.5'
     // picasso, slider 库需要用到下面两个库,这样有点多余，可以选择别的库
     compile 'com.squareup.picasso:picasso:2.5.2'

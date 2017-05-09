@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qinmr.util">
+    package="com.qinmr.mvp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
-        android:name=".App"
+        android:name="com.qinmr.mvp.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
         <activity
-            android:name=".ui.home.MainActivity"
+            android:name="com.qinmr.mvp.ui.home.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -35,13 +35,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.home.SplashActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.qinmr.mvp.ui.home.SplashActivity" android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.news.special.SpecialActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.news.channel.ChannelActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.news.photoset.PhotoSetActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.news.article.NewsArticleActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.photo.bigphoto.BigPhotoActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.qinmr.mvp.ui.news.special.SpecialActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.qinmr.mvp.ui.news.channel.ChannelActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.qinmr.mvp.ui.news.photoset.PhotoSetActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.qinmr.mvp.ui.news.article.NewsArticleActivity" android:screenOrientation="portrait"/>
+        <activity android:name="com.qinmr.mvp.ui.photo.bigphoto.BigPhotoActivity" android:screenOrientation="portrait"/>
 
 
         <meta-data

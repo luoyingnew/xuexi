@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.qinmr.util.widgets.PullScrollView
+    <com.qinmr.mvp.widgets.PullScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,7 +40,7 @@
 
             <include layout="@layout/layout_pull_scrollview_foot" />
         </LinearLayout>
-    </com.qinmr.util.widgets.PullScrollView>
+    </com.qinmr.mvp.widgets.PullScrollView>
 
     <include layout="@layout/layout_common_empty" />
 
