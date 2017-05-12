@@ -22,9 +22,10 @@ android {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
         }
-        greendao{
+        greendao {
             schemaVersion 1
-//            targetGenDir 'src/main/java'
+            targetGenDir 'src/main/java/db'
+            daoPackage 'src/main/java/db/dao'
         }
     }
 }
@@ -55,8 +56,11 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    //屏幕适配
-    compile 'com.zhy:autolayout:1.4.5'
+//    //屏幕适配
+//    compile 'com.zhy:autolayout:1.4.5'
+    //防止Rajava  subscription导致内存溢出
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.0.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
     //json解析
     compile 'com.google.code.gson:gson:2.7'
     //butterknife简化组件的初始化和绑定

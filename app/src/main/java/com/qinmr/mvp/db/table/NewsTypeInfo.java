@@ -1,11 +1,16 @@
 package com.qinmr.mvp.db.table;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+
 /**
  * Created by long on 2016/8/31.
  * 新闻类型
  */
+@Entity
 public class NewsTypeInfo {
 
+    @Id(autoincrement = true)
     private Long id;
     private String name;
     private String typeId;

@@ -8,10 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.qinmr.utillibrary.loading.LoadingLayout;
 import com.qinmr.mvp.R;
-import com.zhy.autolayout.AutoLayoutActivity;
+import com.qinmr.utillibrary.loading.LoadingLayout;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by mrq on 2017/4/10.
  */
 
-public abstract class BaseActivity extends AutoLayoutActivity implements UiCallback , IBaseView {
+public abstract class BaseActivity extends RxAppCompatActivity implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
 
     /**
      * 把 EmptyLayout 放在基类统一处理，@Nullable 表明 View 可以为 null，详细可看 ButterKnife
@@ -111,10 +112,10 @@ public abstract class BaseActivity extends AutoLayoutActivity implements UiCallb
     }
 
     @Override
-    public void showNetError(LoadingLayout.OnReloadListener onRetryListener) {
+    public void showNetError() {
         if (mEmptyLayout != null) {
             mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(onRetryListener);
+            mEmptyLayout.setOnReloadListener(this);
         }
     }
 
@@ -126,10 +127,10 @@ public abstract class BaseActivity extends AutoLayoutActivity implements UiCallb
     }
 
     @Override
-    public void showError(LoadingLayout.OnReloadListener onRetryListener) {
+    public void showError() {
         if (mEmptyLayout != null) {
             mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(onRetryListener);
+            mEmptyLayout.setOnReloadListener(this);
         }
     }
 
@@ -142,4 +143,8 @@ public abstract class BaseActivity extends AutoLayoutActivity implements UiCallb
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onReload(View v) {
+        updateViews();
+    }
 }

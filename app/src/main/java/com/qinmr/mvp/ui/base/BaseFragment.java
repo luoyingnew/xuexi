@@ -24,7 +24,7 @@ import butterknife.Unbinder;
  * Created by mrq on 2017/3/30.
  */
 
-public abstract class BaseFragment extends Fragment implements UiCallback, IBaseView {
+public abstract class BaseFragment extends Fragment implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
 
     protected View mRootView;
     private boolean mIsMulti = false;
@@ -108,10 +108,10 @@ public abstract class BaseFragment extends Fragment implements UiCallback, IBase
     }
 
     @Override
-    public void showNetError(LoadingLayout.OnReloadListener onRetryListener) {
+    public void showNetError() {
         if (mEmptyLayout != null) {
             mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(onRetryListener);
+            mEmptyLayout.setOnReloadListener(this);
         }
     }
 
@@ -123,22 +123,17 @@ public abstract class BaseFragment extends Fragment implements UiCallback, IBase
     }
 
     @Override
-    public void showError(LoadingLayout.OnReloadListener onRetryListener) {
+    public void showError() {
         if (mEmptyLayout != null) {
             mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(onRetryListener);
+            mEmptyLayout.setOnReloadListener(this);
         }
     }
 
     public void showNetView() {
         boolean networkAvailable = NetUtil.isNetworkAvailable(App.getContext());
         if (!networkAvailable) {
-            showNetError(new LoadingLayout.OnReloadListener() {
-                @Override
-                public void onReload(View v) {
-                    updateViews();
-                }
-            });
+            showNetError();
         }
     }
 
@@ -167,4 +162,8 @@ public abstract class BaseFragment extends Fragment implements UiCallback, IBase
         ((BaseActivity) getActivity()).initToolBar(toolbar, homeAsUpEnabled, title);
     }
 
+    @Override
+    public void onReload(View v) {
+        updateViews();
+    }
 }
