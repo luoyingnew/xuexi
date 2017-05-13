@@ -43,6 +43,11 @@ public class ChannelHelper implements ILocalPresenter<NewsTypeInfo> {
     }
 
     @Override
+    public void getData(boolean isRefresh) {
+
+    }
+
+    @Override
     public void getMoreData() {
 
     }

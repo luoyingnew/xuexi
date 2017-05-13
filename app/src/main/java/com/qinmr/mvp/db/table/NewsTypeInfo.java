@@ -1,6 +1,7 @@
 package com.qinmr.mvp.db.table;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 /**
@@ -15,7 +16,7 @@ public class NewsTypeInfo {
     private String name;
     private String typeId;
 
-
+    @Generated(hash = 1707873593)
     public NewsTypeInfo(Long id, String name, String typeId) {
         this.id = id;
         this.name = name;

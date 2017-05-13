@@ -21,7 +21,7 @@ public class BigPhotoHelper implements ILocalPresenter<BeautyPhotoInfo> {
     }
 
     @Override
-    public void getData() {
+    public void getData(boolean isRefresh) {
 
     }
 

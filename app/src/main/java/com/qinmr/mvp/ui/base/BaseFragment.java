@@ -3,33 +3,39 @@ package com.qinmr.mvp.ui.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.qinmr.utillibrary.loading.LoadingLayout;
-import com.qinmr.mvp.util.NetUtil;
 import com.qinmr.mvp.App;
 import com.qinmr.mvp.R;
+import com.qinmr.mvp.db.table.DaoSession;
+import com.qinmr.mvp.rxbus.RxBus;
+import com.qinmr.mvp.util.NetUtil;
 import com.qinmr.mvp.util.SwipeRefreshHelper;
+import com.qinmr.utillibrary.loading.LoadingLayout;
+import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by mrq on 2017/3/30.
  */
 
-public abstract class BaseFragment extends Fragment implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
+public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
 
+    protected T mPresenter;
+
+    protected Context mContext;
+    //缓存Fragment view
     protected View mRootView;
     private boolean mIsMulti = false;
-    protected Context mContext;
-    protected String type;
+
+    protected RxBus mRxBus = new RxBus();
+    protected DaoSession mDaoSession = new App().getDaoSession();
 
     /**
      * 注意，资源的ID一定要一样
@@ -37,7 +43,6 @@ public abstract class BaseFragment extends Fragment implements UiCallback, IBase
     @Nullable
     @BindView(R.id.empty_layout)
     public LoadingLayout mEmptyLayout;
-    private Unbinder unbinder;
 
     @Nullable
     @BindView(R.id.swipe_refresh)
@@ -46,6 +51,7 @@ public abstract class BaseFragment extends Fragment implements UiCallback, IBase
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity();
     }
 
     @Nullable
@@ -53,7 +59,6 @@ public abstract class BaseFragment extends Fragment implements UiCallback, IBase
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(attachLayoutRes(), null);
-            mContext = getContext();
             ButterKnife.bind(this, mRootView);
             initData();
             initViews();

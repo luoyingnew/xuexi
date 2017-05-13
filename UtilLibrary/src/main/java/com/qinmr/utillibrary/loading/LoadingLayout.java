@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.qinmr.utillibrary.R;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class LoadingLayout extends FrameLayout {
 
     public final static int Success = 0;
@@ -187,6 +190,7 @@ public class LoadingLayout extends FrameLayout {
         return this;
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({Success, Empty, Error, No_Network, Loading})
     public @interface Flavour {
 

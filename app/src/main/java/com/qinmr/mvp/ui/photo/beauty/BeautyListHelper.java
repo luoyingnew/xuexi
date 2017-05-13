@@ -1,17 +1,14 @@
 package com.qinmr.mvp.ui.photo.beauty;
 
-import android.view.View;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.AbsCallback;
-import com.qinmr.mvp.ui.base.ILoadDataView;
-import com.qinmr.utillibrary.loading.LoadingLayout;
-import com.qinmr.utillibrary.logger.KLog;
 import com.qinmr.mvp.api.OkgoService;
 import com.qinmr.mvp.db.table.BeautyPhotoInfo;
+import com.qinmr.mvp.ui.base.ILoadDataView;
+import com.qinmr.utillibrary.logger.KLog;
 
 import java.io.Reader;
 import java.util.List;
@@ -61,12 +58,7 @@ public class BeautyListHelper {
                     @Override
                     public void onError(Call call, Response response, Exception e) {
                         super.onError(call, response, e);
-                        mView.showError(new LoadingLayout.OnReloadListener() {
-                            @Override
-                            public void onReload(View v) {
-                                getData();
-                            }
-                        });
+                        mView.showError();
                     }
                 });
     }

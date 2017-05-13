@@ -8,12 +8,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.qinmr.mvp.App;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.ViewPagerAdapter;
 import com.qinmr.mvp.bus.ChannelEvent;
 import com.qinmr.mvp.db.collect.DBNewsTypeInfoCollect;
 import com.qinmr.mvp.db.table.NewsTypeInfo;
 import com.qinmr.mvp.ui.base.BaseFragment;
+import com.qinmr.mvp.ui.base.IRxBusPresenter;
 import com.qinmr.mvp.ui.news.channel.ChannelActivity;
 import com.qinmr.mvp.ui.news.newslist.NewsListFragment;
 
@@ -26,11 +28,13 @@ import java.util.List;
 
 import butterknife.BindView;
 
+
 /**
+ * 新闻类主页面
  * Created by mrq on 2017/4/10.
  */
 
-public class NewsMainFragment extends BaseFragment {
+public class NewsMainFragment extends BaseFragment<IRxBusPresenter> implements INewsMainView {
 
     @BindView(R.id.tool_bar)
     Toolbar mToolBar;
@@ -48,14 +52,14 @@ public class NewsMainFragment extends BaseFragment {
 
     @Override
     public void initData() {
-
+        mPresenter = new NewsMainPresenter(this,App.getDaoSession().getNewsTypeInfoDao(),mRxBus);
+        mPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
     }
 
     @Override
     public void initViews() {
         initToolBar(mToolBar, true, "新闻");
         setHasOptionsMenu(true);
-        mPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         //注册事件
@@ -64,7 +68,8 @@ public class NewsMainFragment extends BaseFragment {
 
     @Override
     public void updateViews() {
-        getData();
+//        getData();
+        mPresenter.getData(false);
     }
 
     public void getData() {
@@ -106,4 +111,16 @@ public class NewsMainFragment extends BaseFragment {
         updateViews();
     }
 
+    @Override
+    public void loadData(List<NewsTypeInfo> checkList) {
+        if (checkList.size() != 0) {
+            List<Fragment> fragments = new ArrayList<>();
+            List<String> titles = new ArrayList<>();
+            for (NewsTypeInfo bean : checkList) {
+                titles.add(bean.getName());
+                fragments.add(NewsListFragment.newInstance(bean.getTypeId()));
+            }
+            mPagerAdapter.setItems(fragments, titles);
+        }
+    }
 }
