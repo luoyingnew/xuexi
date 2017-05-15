@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.AbsCallback;
-import com.qinmr.utillibrary.logger.KLog;
 import com.qinmr.mvp.api.OkgoService;
 import com.qinmr.mvp.api.bean.WelfarePhotoInfo;
 import com.qinmr.mvp.api.bean.WelfarePhotoList;
@@ -40,7 +39,6 @@ public class WelfareListHelper {
     public void getData() {
         mView.showLoading();
         String welfarePhotoUrl = OkgoService.getWelfarePhoto(mPage);
-        KLog.e(welfarePhotoUrl);
         OkGo.get(welfarePhotoUrl)
                 .tag(this)// 请求的 tag, 主要用于取消对应的请求
                 .cacheKey("cacheKey")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
@@ -86,7 +84,6 @@ public class WelfareListHelper {
                                 }.getType());
                         response.close();
                         List<WelfarePhotoInfo> results = data.getResults();
-                        KLog.e(results.size());
                         if (results.size() == 0) {
                             mView.loadNoData();
                         }

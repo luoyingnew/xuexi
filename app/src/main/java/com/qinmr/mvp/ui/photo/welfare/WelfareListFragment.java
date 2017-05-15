@@ -49,7 +49,7 @@ public class WelfareListFragment extends BaseFragment implements ILoadDataView<L
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         helper.getData();
     }
 

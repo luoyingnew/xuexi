@@ -65,7 +65,7 @@ public class PhotoMainFragment extends BaseFragment {
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
 
     }
 }

@@ -13,9 +13,9 @@ import com.qinmr.mvp.App;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.db.table.DaoSession;
 import com.qinmr.mvp.rxbus.RxBus;
-import com.qinmr.mvp.util.NetUtil;
 import com.qinmr.mvp.util.SwipeRefreshHelper;
 import com.qinmr.utillibrary.loading.LoadingLayout;
+import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
 import butterknife.BindView;
@@ -34,8 +34,8 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
     protected View mRootView;
     private boolean mIsMulti = false;
 
-    protected RxBus mRxBus = new RxBus();
-    protected DaoSession mDaoSession = new App().getDaoSession();
+    protected RxBus mRxBus = App.getRxBus();
+    protected DaoSession mDaoSession = App.getDaoSession();
 
     /**
      * 注意，资源的ID一定要一样
@@ -76,7 +76,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
         super.onActivityCreated(savedInstanceState);
         if (getUserVisibleHint() && mRootView != null && !mIsMulti) {
             mIsMulti = true;
-            updateViews();
+            updateViews(false);
         }
     }
 
@@ -84,7 +84,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser && isVisible() && mRootView != null && !mIsMulti) {
             mIsMulti = true;
-            updateViews();
+            updateViews(false);
         } else {
             super.setUserVisibleHint(isVisibleToUser);
         }
@@ -135,13 +135,6 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
         }
     }
 
-    public void showNetView() {
-        boolean networkAvailable = NetUtil.isNetworkAvailable(App.getContext());
-        if (!networkAvailable) {
-            showNetError();
-        }
-    }
-
     /**
      * 初始化下拉刷新
      */
@@ -150,7 +143,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
             SwipeRefreshHelper.init(mSwipeRefresh, new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
-                    updateViews();
+                    updateViews(true);
                 }
             });
         }
@@ -169,6 +162,17 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
 
     @Override
     public void onReload(View v) {
-        updateViews();
+        updateViews(false);
+    }
+
+    /**
+     * 绑定订阅，用来销毁销毁订阅
+     *
+     * @param <T>
+     * @return
+     */
+    @Override
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.<T>bindToLifecycle();
     }
 }

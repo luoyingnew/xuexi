@@ -4,9 +4,11 @@ import com.qinmr.mvp.db.table.NewsTypeInfo;
 import com.qinmr.mvp.db.table.NewsTypeInfoDao;
 import com.qinmr.mvp.rxbus.RxBus;
 import com.qinmr.mvp.ui.base.IRxBusPresenter;
+import com.qinmr.utillibrary.logger.KLog;
 
 import java.util.List;
 
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -45,11 +47,17 @@ public class NewsMainPresenter implements IRxBusPresenter {
 
     @Override
     public <T> void registerRxBus(Class<T> eventType, Action1<T> action) {
-
+        Subscription subscription = mRxBus.doSubscribe(eventType, action, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                KLog.e(throwable.toString());
+            }
+        });
+        mRxBus.addSubscription(this, subscription);
     }
 
     @Override
     public void unregisterRxBus() {
-
+        mRxBus.unSubscribe(this);
     }
 }

@@ -8,15 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.qinmr.recycler.listener.OnItemMoveListener;
-import com.qinmr.recycler.listener.OnRecyclerViewItemClickListener;
-import com.qinmr.recycler.listener.OnRemoveDataListener;
-import com.qinmr.utillibrary.logger.KLog;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.ManageAdapter;
 import com.qinmr.mvp.db.table.NewsTypeInfo;
 import com.qinmr.mvp.helper.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseActivity;
+import com.qinmr.recycler.listener.OnRecyclerViewItemClickListener;
+import com.qinmr.recycler.listener.OnRemoveDataListener;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ import butterknife.BindView;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 
-public class ChannelActivity extends BaseActivity implements IChannelView {
+public class ChannelActivity extends BaseActivity<ChannelPresenter> implements IChannelView {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -32,7 +30,6 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
     RecyclerView mRvCheckedList;
     @BindView(R.id.rv_unchecked_list)
     RecyclerView mRvUncheckedList;
-    private ChannelHelper channelHelper;
     private ManageAdapter mCheckedAdapter;
     private ManageAdapter mUncheckedAdapter;
 
@@ -50,7 +47,7 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
 
     @Override
     public void initData() {
-        channelHelper = new ChannelHelper(this);
+        mPresenter = new ChannelPresenter(this, mDaoSession.getNewsTypeInfoDao(), mRxBus);
     }
 
     @Override
@@ -61,6 +58,7 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
 
         RecyclerViewHelper.initRecyclerViewG(this, mRvCheckedList, mCheckedAdapter, 4);
         RecyclerViewHelper.initRecyclerViewG(this, mRvUncheckedList, mUncheckedAdapter, 4);
+
         RecyclerViewHelper.startDragAndSwipe(mRvCheckedList, mCheckedAdapter, 3);
         // 设置动画
         mRvCheckedList.setItemAnimator(new ScaleInAnimator());
@@ -72,19 +70,17 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
             @Override
             public void onRemove(int position) {
                 mUncheckedAdapter.addLastItem(mCheckedAdapter.getItem(position));
-                channelHelper.delete(mCheckedAdapter.getItem(position));
-                KLog.e(1111111);
+                mPresenter.delete(mCheckedAdapter.getItem(position));
             }
         });
-        // 设置移动监听器
-        mCheckedAdapter.setItemMoveListener(new OnItemMoveListener() {
-            @Override
-            public void onItemMove(int fromPosition, int toPosition) {
-//                mPresenter.update(mCheckedAdapter.getData());
-//                mPresenter.swap(fromPosition, toPosition);
-//                KLog.e(22222222);
-            }
-        });
+//        // 设置移动监听器
+//        mCheckedAdapter.setItemMoveListener(new OnItemMoveListener() {
+//            @Override
+//            public void onItemMove(int fromPosition, int toPosition) {
+////                mPresenter.update(mCheckedAdapter.getData());
+////                mPresenter.swap(fromPosition, toPosition);
+//            }
+//        });
         // 设置点击删除添加到unCheck中
         mCheckedAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -93,7 +89,7 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
                 NewsTypeInfo data = mCheckedAdapter.getItem(position);
                 mCheckedAdapter.removeItem(position);
                 mUncheckedAdapter.addLastItem(data);
-                channelHelper.delete(data);
+                mPresenter.delete(data);
             }
         });  // 设置点击删除添加到check中
         mUncheckedAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
@@ -103,7 +99,7 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
                 NewsTypeInfo data = mUncheckedAdapter.getItem(position);
                 mUncheckedAdapter.removeItem(position);
                 mCheckedAdapter.addLastItem(data);
-                channelHelper.insert(data);
+                mPresenter.insert(data);
             }
         });
 
@@ -111,8 +107,8 @@ public class ChannelActivity extends BaseActivity implements IChannelView {
     }
 
     @Override
-    public void updateViews() {
-        channelHelper.getData();
+    public void updateViews(boolean isRefresh) {
+        mPresenter.getData(isRefresh);
     }
 
     @Override

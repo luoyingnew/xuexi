@@ -8,25 +8,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.qinmr.mvp.App;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.ViewPagerAdapter;
-import com.qinmr.mvp.bus.ChannelEvent;
-import com.qinmr.mvp.db.collect.DBNewsTypeInfoCollect;
 import com.qinmr.mvp.db.table.NewsTypeInfo;
+import com.qinmr.mvp.rxbus.event.ChannelEvent;
 import com.qinmr.mvp.ui.base.BaseFragment;
 import com.qinmr.mvp.ui.base.IRxBusPresenter;
 import com.qinmr.mvp.ui.news.channel.ChannelActivity;
 import com.qinmr.mvp.ui.news.newslist.NewsListFragment;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.functions.Action1;
 
 
 /**
@@ -52,7 +47,7 @@ public class NewsMainFragment extends BaseFragment<IRxBusPresenter> implements I
 
     @Override
     public void initData() {
-        mPresenter = new NewsMainPresenter(this,App.getDaoSession().getNewsTypeInfoDao(),mRxBus);
+        mPresenter = new NewsMainPresenter(this, mDaoSession.getNewsTypeInfoDao(), mRxBus);
         mPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
     }
 
@@ -62,27 +57,38 @@ public class NewsMainFragment extends BaseFragment<IRxBusPresenter> implements I
         setHasOptionsMenu(true);
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        //注册事件
-        EventBus.getDefault().register(this);
+        mPresenter.registerRxBus(ChannelEvent.class, new Action1<ChannelEvent>() {
+            @Override
+            public void call(ChannelEvent channelEvent) {
+                handleChannelEvent(channelEvent);
+            }
+        });
+    }
+
+    /**
+     * 处理频道事件
+     *
+     * @param channelEvent
+     */
+    private void handleChannelEvent(ChannelEvent channelEvent) {
+        switch (channelEvent.eventType) {
+            case ChannelEvent.ADD_EVENT:
+                mPagerAdapter.addItem(NewsListFragment.newInstance(channelEvent.newsInfo.getTypeId()), channelEvent.newsInfo.getName());
+                break;
+            case ChannelEvent.DEL_EVENT:
+                // 如果是删除操作直接切换第一项，不然容易出现加载到不存在的Fragment
+                mViewPager.setCurrentItem(0);
+                mPagerAdapter.delItem(channelEvent.newsInfo.getName());
+                break;
+            case ChannelEvent.SWAP_EVENT:
+                mPagerAdapter.swapItems(channelEvent.fromPos, channelEvent.toPos);
+                break;
+        }
     }
 
     @Override
-    public void updateViews() {
-//        getData();
-        mPresenter.getData(false);
-    }
-
-    public void getData() {
-        List<NewsTypeInfo> newsTypeInfo = DBNewsTypeInfoCollect.getNewsTypeInfo();
-        if (newsTypeInfo.size() != 0) {
-            List<Fragment> fragments = new ArrayList<>();
-            List<String> titles = new ArrayList<>();
-            for (NewsTypeInfo bean : newsTypeInfo) {
-                titles.add(bean.getName());
-                fragments.add(NewsListFragment.newInstance(bean.getTypeId()));
-            }
-            mPagerAdapter.setItems(fragments, titles);
-        }
+    public void updateViews(boolean isRefresh) {
+        mPresenter.getData(isRefresh);
     }
 
     @Override
@@ -102,13 +108,7 @@ public class NewsMainFragment extends BaseFragment<IRxBusPresenter> implements I
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //取消注册事件
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMoonEvent(ChannelEvent event) {
-        updateViews();
+        mPresenter.unregisterRxBus();
     }
 
     @Override

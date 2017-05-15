@@ -44,7 +44,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
 
     }
 

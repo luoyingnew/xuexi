@@ -50,7 +50,7 @@ public class PhotoNewsFragment extends BaseFragment implements ILoadDataView<Lis
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         helper.getData();
     }
 

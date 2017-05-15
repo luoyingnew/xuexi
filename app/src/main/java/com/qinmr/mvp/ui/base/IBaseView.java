@@ -1,5 +1,7 @@
 package com.qinmr.mvp.ui.base;
 
+import com.trello.rxlifecycle.LifecycleTransformer;
+
 /**
  * Created by long on 2016/8/23.
  * 基础 BaseView 接口
@@ -30,5 +32,13 @@ public interface IBaseView {
      * 显示网络错误
      */
     void showNetError();
+
+    /**
+     * 绑定生命周期
+     *
+     * @param <T>
+     * @return
+     */
+    <T> LifecycleTransformer<T> bindToLife();
 
 }

@@ -77,8 +77,8 @@ dependencies {
     compile 'com.lzy.net:okserver:+'
     //加载图片很不错
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    //比较方便通讯
-    compile 'org.greenrobot:eventbus:3.0.0'
+//    //比较方便通讯
+//    compile 'org.greenrobot:eventbus:3.0.0'
     // dragsloplayout 处理新闻类型详情或者类似的特效库
     compile 'com.github.Rukey7:DragSlopLayout:1.0.3'
     // photoview

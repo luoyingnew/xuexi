@@ -75,7 +75,7 @@ public class PhotoSetActivity extends BaseActivity implements IPhotoSetView {
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         helper.getData();
     }
 

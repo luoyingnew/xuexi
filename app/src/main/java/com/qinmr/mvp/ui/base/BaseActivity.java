@@ -10,8 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.qinmr.mvp.App;
 import com.qinmr.mvp.R;
+import com.qinmr.mvp.db.table.DaoSession;
+import com.qinmr.mvp.rxbus.RxBus;
 import com.qinmr.utillibrary.loading.LoadingLayout;
+import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.BindView;
@@ -21,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by mrq on 2017/4/10.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
+public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompatActivity implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
 
     /**
      * 把 EmptyLayout 放在基类统一处理，@Nullable 表明 View 可以为 null，详细可看 ButterKnife
@@ -30,6 +34,10 @@ public abstract class BaseActivity extends RxAppCompatActivity implements UiCall
     @BindView(R.id.empty_layout)
     protected LoadingLayout mEmptyLayout;
 
+    protected T mPresenter;
+    protected RxBus mRxBus = App.getRxBus();
+    protected DaoSession mDaoSession = App.getDaoSession();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +45,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements UiCall
         ButterKnife.bind(this);
         initData();
         initViews();
-        updateViews();
+        updateViews(false);
     }
 
     /**
@@ -143,8 +151,23 @@ public abstract class BaseActivity extends RxAppCompatActivity implements UiCall
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Error 从新加载的回调
+     *
+     * @param v
+     */
     @Override
     public void onReload(View v) {
-        updateViews();
+        updateViews(false);
+    }
+
+    /**
+     * 绑定订阅，用来销毁销毁订阅
+     * @param <T>
+     * @return
+     */
+    @Override
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.<T>bindToLifecycle();
     }
 }

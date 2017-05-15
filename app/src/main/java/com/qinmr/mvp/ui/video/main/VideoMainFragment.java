@@ -63,7 +63,7 @@ public class VideoMainFragment extends BaseFragment {
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         ArrayList<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < VIDEO_ID.length; i++) {
             fragments.add(VideoListFragment.newInstance(VIDEO_ID[i]));

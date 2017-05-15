@@ -61,7 +61,7 @@ public class SpecialActivity extends BaseSwipeBackActivity implements ISpecialVi
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         helper.getData();
     }
 

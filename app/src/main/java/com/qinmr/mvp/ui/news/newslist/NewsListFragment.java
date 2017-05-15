@@ -1,14 +1,12 @@
 package com.qinmr.mvp.ui.news.newslist;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.daimajia.slider.library.SliderLayout;
-import com.qinmr.recycler.listener.OnRequestDataListener;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.NewsMultiListAdapter;
 import com.qinmr.mvp.adapter.item.NewsMultiItem;
@@ -16,6 +14,7 @@ import com.qinmr.mvp.api.bean.NewsInfo;
 import com.qinmr.mvp.helper.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseFragment;
 import com.qinmr.mvp.util.SliderHelper;
+import com.qinmr.recycler.listener.OnRequestDataListener;
 
 import java.util.List;
 
@@ -49,8 +48,12 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int attachLayoutRes() {
+        return R.layout.fragment_news_list;
+    }
+
+    @Override
+    public void initData() {
         if (getArguments() != null) {
             mNewsId = getArguments().getString(NEWS_TYPE_KEY);
         }
@@ -58,20 +61,7 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
     }
 
     @Override
-    public int attachLayoutRes() {
-        return R.layout.fragment_news_list;
-    }
-
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
     public void initViews() {
-        //检测网络状态
-        showNetView();
-
         mAdapter = new NewsMultiListAdapter(mContext);
         SlideInBottomAnimationAdapter buttomAnimAdapter = new SlideInBottomAnimationAdapter(mAdapter);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(buttomAnimAdapter);
@@ -85,7 +75,7 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         mDataHelper.getData();
     }
 

@@ -52,7 +52,7 @@ public class BeautyListFragment extends BaseFragment implements ILoadDataView<Li
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         helper.getData();
     }
 

@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         mNavView.setCheckedItem(R.id.nav_news);
         replaceFragment(R.id.fl_container, new NewsMainFragment(), mSparseTags.get(R.id.nav_news));
     }

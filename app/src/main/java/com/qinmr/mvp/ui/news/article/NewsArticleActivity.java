@@ -160,7 +160,7 @@ public class NewsArticleActivity extends BaseSwipeBackActivity implements INewsA
     }
 
     @Override
-    public void updateViews() {
+    public void updateViews(boolean isRefresh) {
         helper.getData();
     }
 
