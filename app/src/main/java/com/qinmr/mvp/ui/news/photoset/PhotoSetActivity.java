@@ -49,7 +49,6 @@ public class PhotoSetActivity extends BaseActivity implements IPhotoSetView {
     private PhotoSetAdapter mAdapter;
     private List<PhotosEntity> mPhotosEntities;
     private boolean mIsHideToolbar = false;
-    private PhotoSetHelper helper;
 
     public static void launch(Context context, String photoId) {
         Intent intent = new Intent(context, PhotoSetActivity.class);
@@ -66,7 +65,7 @@ public class PhotoSetActivity extends BaseActivity implements IPhotoSetView {
     @Override
     public void initData() {
         mPhotoSetId = getIntent().getStringExtra(PHOTO_SET_KEY);
-        helper = new PhotoSetHelper(this, mPhotoSetId);
+        mPresenter = new PhotoSetPensenter(this,mPhotoSetId);
     }
 
     @Override
@@ -76,7 +75,7 @@ public class PhotoSetActivity extends BaseActivity implements IPhotoSetView {
 
     @Override
     public void updateViews(boolean isRefresh) {
-        helper.getData();
+        mPresenter.getData(isRefresh);
     }
 
     @Override

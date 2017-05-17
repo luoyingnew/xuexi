@@ -69,7 +69,6 @@ public class NewsArticleActivity extends BaseSwipeBackActivity implements INewsA
 
     private static final String SHOW_POPUP_DETAIL = "ShowPopupDetail";
     private static final String NEWS_ID_KEY = "NewsIdKey";
-    private NewsArticleHelper helper;
 
     public static void launch(Context context, String newsId) {
         Intent intent = new Intent(context, NewsArticleActivity.class);
@@ -94,13 +93,13 @@ public class NewsArticleActivity extends BaseSwipeBackActivity implements INewsA
     @Override
     public void initData() {
         mNewsId = getIntent().getStringExtra(NEWS_ID_KEY);
-        helper = new NewsArticleHelper(this,mNewsId);
-        mToolbarHeight = getResources().getDimensionPixelSize(R.dimen.news_detail_toolbar_height);
-        mTopBarHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_height);
+        mPresenter = new NewsArticlePensenter(this,mNewsId);
     }
 
     @Override
     public void initViews() {
+        mToolbarHeight = getResources().getDimensionPixelSize(R.dimen.news_detail_toolbar_height);
+        mTopBarHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_height);
         mMinScrollSlop = ViewConfiguration.get(this).getScaledTouchSlop();
         //隐藏自定义的actionBar
         ViewCompat.setTranslationY(mLlTopBar, -mTopBarHeight);
@@ -161,7 +160,7 @@ public class NewsArticleActivity extends BaseSwipeBackActivity implements INewsA
 
     @Override
     public void updateViews(boolean isRefresh) {
-        helper.getData();
+        mPresenter.getData(isRefresh);
     }
 
     @Override

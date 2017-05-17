@@ -34,7 +34,6 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
     RecyclerView mRvNewsList;
 
     private String mNewsId;
-    private NewsListDataHelper mDataHelper;
     private NewsMultiListAdapter mAdapter;
 
     private SliderLayout mAdSlider;
@@ -57,7 +56,7 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
         if (getArguments() != null) {
             mNewsId = getArguments().getString(NEWS_TYPE_KEY);
         }
-        mDataHelper = new NewsListDataHelper(this, mNewsId);
+        mPresenter = new NewsListPresenter(this, mNewsId);
     }
 
     @Override
@@ -69,14 +68,14 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
         mAdapter.setRequestDataListener(new OnRequestDataListener() {
             @Override
             public void onLoadMore() {
-                mDataHelper.getMoreData();
+                mPresenter.getMoreData();
             }
         });
     }
 
     @Override
     public void updateViews(boolean isRefresh) {
-        mDataHelper.getData();
+        mPresenter.getData(isRefresh);
     }
 
     @Override
@@ -118,6 +117,7 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
 
     /**
      * 增加头部的信息
+     *
      * @param newsInfo
      */
     private void addHeadView(NewsInfo newsInfo) {

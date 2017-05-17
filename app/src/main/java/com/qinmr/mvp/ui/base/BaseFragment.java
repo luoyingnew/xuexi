@@ -14,7 +14,7 @@ import com.qinmr.mvp.R;
 import com.qinmr.mvp.db.table.DaoSession;
 import com.qinmr.mvp.rxbus.RxBus;
 import com.qinmr.mvp.util.SwipeRefreshHelper;
-import com.qinmr.utillibrary.loading.LoadingLayout;
+import com.qinmr.utillibrary.loading.EmptyLayout;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by mrq on 2017/3/30.
  */
 
-public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
+public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment implements UiCallback, IBaseView, EmptyLayout.OnRetryListener {
 
     protected T mPresenter;
 
@@ -42,7 +42,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
      */
     @Nullable
     @BindView(R.id.empty_layout)
-    public LoadingLayout mEmptyLayout;
+    public EmptyLayout mEmptyLayout;
 
     @Nullable
     @BindView(R.id.swipe_refresh)
@@ -98,41 +98,31 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
     @Override
     public void showLoading() {
         if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Loading);
-            SwipeRefreshHelper.enableRefresh(mSwipeRefresh, false);
+            mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_LOADING);
         }
     }
 
     @Override
     public void hideLoading() {
         if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Success);
-            SwipeRefreshHelper.enableRefresh(mSwipeRefresh, true);
-            SwipeRefreshHelper.controlRefresh(mSwipeRefresh, false);
+            mEmptyLayout.hide();
         }
     }
 
     @Override
     public void showNetError() {
         if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(this);
+            mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_NO_NET);
+            mEmptyLayout.setRetryListener(this);
         }
     }
 
+    /**
+     * Error 从新加载的回调
+     */
     @Override
-    public void showEmpty() {
-        if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Empty);
-        }
-    }
-
-    @Override
-    public void showError() {
-        if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(this);
-        }
+    public void onRetry() {
+        updateViews(false);
     }
 
     /**
@@ -158,11 +148,6 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment 
      */
     protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
         ((BaseActivity) getActivity()).initToolBar(toolbar, homeAsUpEnabled, title);
-    }
-
-    @Override
-    public void onReload(View v) {
-        updateViews(false);
     }
 
     /**

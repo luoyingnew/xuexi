@@ -19,16 +19,6 @@ public interface IBaseView {
     void hideLoading();
 
     /**
-     * 显示空页面
-     */
-    void showEmpty();
-
-    /**
-     * 显示错误页面
-     */
-    void showError();
-
-    /**
      * 显示网络错误
      */
     void showNetError();

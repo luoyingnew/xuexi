@@ -8,13 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.qinmr.mvp.App;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.db.table.DaoSession;
 import com.qinmr.mvp.rxbus.RxBus;
-import com.qinmr.utillibrary.loading.LoadingLayout;
+import com.qinmr.utillibrary.loading.EmptyLayout;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
@@ -25,14 +24,14 @@ import butterknife.ButterKnife;
  * Created by mrq on 2017/4/10.
  */
 
-public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompatActivity implements UiCallback, IBaseView, LoadingLayout.OnReloadListener {
+public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompatActivity implements UiCallback, IBaseView, EmptyLayout.OnRetryListener {
 
     /**
      * 把 EmptyLayout 放在基类统一处理，@Nullable 表明 View 可以为 null，详细可看 ButterKnife
      */
     @Nullable
     @BindView(R.id.empty_layout)
-    protected LoadingLayout mEmptyLayout;
+    protected EmptyLayout mEmptyLayout;
 
     protected T mPresenter;
     protected RxBus mRxBus = App.getRxBus();
@@ -108,38 +107,31 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
     @Override
     public void showLoading() {
         if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Loading);
+            mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_LOADING);
         }
     }
 
     @Override
     public void hideLoading() {
         if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Success);
+            mEmptyLayout.hide();
         }
     }
 
     @Override
     public void showNetError() {
         if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(this);
+            mEmptyLayout.setEmptyStatus(EmptyLayout.STATUS_NO_NET);
+            mEmptyLayout.setRetryListener(this);
         }
     }
 
+    /**
+     * Error 从新加载的回调
+     */
     @Override
-    public void showEmpty() {
-        if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Empty);
-        }
-    }
-
-    @Override
-    public void showError() {
-        if (mEmptyLayout != null) {
-            mEmptyLayout.setStatus(LoadingLayout.Error);
-            mEmptyLayout.setOnReloadListener(this);
-        }
+    public void onRetry() {
+        updateViews(false);
     }
 
     @Override
@@ -152,17 +144,8 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
     }
 
     /**
-     * Error 从新加载的回调
-     *
-     * @param v
-     */
-    @Override
-    public void onReload(View v) {
-        updateViews(false);
-    }
-
-    /**
      * 绑定订阅，用来销毁销毁订阅
+     *
      * @param <T>
      * @return
      */
@@ -170,4 +153,5 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
     public <T> LifecycleTransformer<T> bindToLife() {
         return this.<T>bindToLifecycle();
     }
+
 }

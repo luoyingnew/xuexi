@@ -3,13 +3,21 @@ package com.qinmr.mvp.api;
 import android.support.annotation.NonNull;
 
 import com.qinmr.mvp.App;
+import com.qinmr.mvp.api.bean.NewsDetailInfo;
+import com.qinmr.mvp.api.bean.NewsInfo;
+import com.qinmr.mvp.api.bean.PhotoInfo;
+import com.qinmr.mvp.api.bean.PhotoSetInfo;
+import com.qinmr.mvp.api.bean.SpecialInfo;
 import com.qinmr.mvp.util.NetUtil;
+import com.qinmr.mvp.util.StringUtils;
 import com.qinmr.utillibrary.logger.KLog;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -23,6 +31,10 @@ import okio.Buffer;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by long on 2016/8/22.
@@ -150,83 +162,83 @@ public class RetrofitService {
 
     /************************************ API *******************************************/
 
-//    /**
-//     * 获取新闻列表
-//     * @return
-//     */
-//    public static Observable<NewsInfo> getNewsList(String newsId, int page) {
-//        String type;
-//        if (newsId.equals(HEAD_LINE_NEWS)) {
-//            type = "headline";
-//        } else {
-//            type = "list";
-//        }
-//        return sNewsService.getNewsList(type, newsId, page * INCREASE_PAGE)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(_flatMapNews(newsId));
-//    }
-//
-//    /**
-//     * 获取专题数据
-//     * @param specialId
-//     * @return
-//     */
-//    public static Observable<SpecialInfo> getSpecial(String specialId) {
-//        return sNewsService.getSpecial(specialId)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(_flatMapSpecial(specialId));
-//    }
-//
-//    /**
-//     * 获取新闻详情
-//     * @param newsId 新闻ID
-//     * @return
-//     */
-//    public static Observable<NewsDetailInfo> getNewsDetail(final String newsId) {
-//        return sNewsService.getNewsDetail(newsId)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(new Func1<Map<String, NewsDetailInfo>, Observable<NewsDetailInfo>>() {
-//                    @Override
-//                    public Observable<NewsDetailInfo> call(Map<String, NewsDetailInfo> newsDetailMap) {
-//                        return Observable.just(newsDetailMap.get(newsId));
-//                    }
-//                });
-//    }
-//
-//    /**
-//     * 获取图集
-//     * @param photoId 图集ID
-//     * @return
-//     */
-//    public static Observable<PhotoSetInfo> getPhotoSet(String photoId) {
-//        return sNewsService.getPhotoSet(StringUtils.clipPhotoSetId(photoId))
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread());
-//    }
-//
-//    /**
-//     * 获取图片列表
-//     * @return
-//     */
-//    public static Observable<List<PhotoInfo>> getPhotoList() {
-//        return sNewsService.getPhotoList()
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread());
-//    }
-//
+    /**
+     * 获取新闻列表
+     * @return
+     */
+    public static Observable<NewsInfo> getNewsList(String newsId, int page) {
+        String type;
+        if (newsId.equals(HEAD_LINE_NEWS)) {
+            type = "headline";
+        } else {
+            type = "list";
+        }
+        return sNewsService.getNewsList(type, newsId, page * INCREASE_PAGE)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(_flatMapNews(newsId));
+    }
+
+    /**
+     * 获取专题数据
+     * @param specialId
+     * @return
+     */
+    public static Observable<SpecialInfo> getSpecial(String specialId) {
+        return sNewsService.getSpecial(specialId)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(_flatMapSpecial(specialId));
+    }
+
+    /**
+     * 获取新闻详情
+     * @param newsId 新闻ID
+     * @return
+     */
+    public static Observable<NewsDetailInfo> getNewsDetail(final String newsId) {
+        return sNewsService.getNewsDetail(newsId)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(new Func1<Map<String, NewsDetailInfo>, Observable<NewsDetailInfo>>() {
+                    @Override
+                    public Observable<NewsDetailInfo> call(Map<String, NewsDetailInfo> newsDetailMap) {
+                        return Observable.just(newsDetailMap.get(newsId));
+                    }
+                });
+    }
+
+    /**
+     * 获取图集
+     * @param photoId 图集ID
+     * @return
+     */
+    public static Observable<PhotoSetInfo> getPhotoSet(String photoId) {
+        return sNewsService.getPhotoSet(StringUtils.clipPhotoSetId(photoId))
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 获取图片列表
+     * @return
+     */
+    public static Observable<List<PhotoInfo>> getPhotoList() {
+        return sNewsService.getPhotoList()
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 //    /**
 //     * 获取更多图片列表
 //     * @return
@@ -311,21 +323,21 @@ public class RetrofitService {
 //                    .observeOn(AndroidSchedulers.mainThread());
 //        }
 //    }
-//
-//    /**
-//     * 类型转换
-//     * @param typeStr 新闻类型
-//     * @return
-//     */
-//    private static Func1<Map<String, List<NewsInfo>>, Observable<NewsInfo>> _flatMapNews(final String typeStr) {
-//        return new Func1<Map<String, List<NewsInfo>>, Observable<NewsInfo>>() {
-//            @Override
-//            public Observable<NewsInfo> call(Map<String, List<NewsInfo>> newsListMap) {
-//                return Observable.from(newsListMap.get(typeStr));
-//            }
-//        };
-//    }
-//
+
+    /**
+     * 类型转换
+     * @param typeStr 新闻类型
+     * @return
+     */
+    private static Func1<Map<String, List<NewsInfo>>, Observable<NewsInfo>> _flatMapNews(final String typeStr) {
+        return new Func1<Map<String, List<NewsInfo>>, Observable<NewsInfo>>() {
+            @Override
+            public Observable<NewsInfo> call(Map<String, List<NewsInfo>> newsListMap) {
+                return Observable.from(newsListMap.get(typeStr));
+            }
+        };
+    }
+
 //    /**
 //     * 类型转换
 //     * @param typeStr 视频类型
@@ -340,20 +352,20 @@ public class RetrofitService {
 //        };
 //    }
 //
-//    /**
-//     * 类型转换
-//     * @param specialId 专题id
-//     * @return
-//     */
-//    private static Func1<Map<String, SpecialInfo>, Observable<SpecialInfo>> _flatMapSpecial(final String specialId) {
-//        return new Func1<Map<String, SpecialInfo>, Observable<SpecialInfo>>() {
-//            @Override
-//            public Observable<SpecialInfo> call(Map<String, SpecialInfo> specialMap) {
-//                return Observable.just(specialMap.get(specialId));
-//            }
-//        };
-//    }
-//
+    /**
+     * 类型转换
+     * @param specialId 专题id
+     * @return
+     */
+    private static Func1<Map<String, SpecialInfo>, Observable<SpecialInfo>> _flatMapSpecial(final String specialId) {
+        return new Func1<Map<String, SpecialInfo>, Observable<SpecialInfo>>() {
+            @Override
+            public Observable<SpecialInfo> call(Map<String, SpecialInfo> specialMap) {
+                return Observable.just(specialMap.get(specialId));
+            }
+        };
+    }
+
 //    /**
 //     * 类型转换
 //     * @return

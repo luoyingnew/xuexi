@@ -36,7 +36,8 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.qinmr.utillibrary.R;
+import com.qinmr.mvp.R;
+
 
 public class CircleImageView extends ImageView {
 
