@@ -49,7 +49,7 @@ public interface INewsApi {
      * @param specialIde 专题ID
      * @return
      */
-    @Headers(CACHE_CONTROL_NETWORK)
+    @Headers(AVOID_HTTP403_FORBIDDEN)
     @GET("nc/special/{specialId}.html")
     Observable<Map<String, SpecialInfo>> getSpecial(@Path("specialId") String specialIde);
 

@@ -47,7 +47,6 @@ public class SpecialPensenter implements IBasePresenter {
                     @Override
                     public Observable<SpecialItem> call(SpecialInfo specialBean) {
                         mView.loadBanner(specialBean);
-                        KLog.e("specialBean");
                         return convertSpecialBeanToItem(specialBean);
                     }
                 })
@@ -84,7 +83,7 @@ public class SpecialPensenter implements IBasePresenter {
      */
     private Observable<SpecialItem> convertSpecialBeanToItem(SpecialInfo specialBean) {
         // 这边 +1 是接口数据还有个 topicsplus 的字段可能是穿插在 topics 字段列表中间。这里没有处理 topicsplus
-        final SpecialItem[] specialItems = new SpecialItem[specialBean.getTopics().size() + 1];
+        final SpecialItem[] specialItems = new SpecialItem[specialBean.getTopics().size()];
         return Observable.from(specialBean.getTopics())
                 // 获取头部
                 .doOnNext(new Action1<TopicsEntity>() {

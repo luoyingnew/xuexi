@@ -28,6 +28,7 @@ public class NewsArticlePensenter implements IBasePresenter {
 
     @Override
     public void getData(boolean isRefresh) {
+        KLog.e(mNewsId);
         RetrofitService.getNewsDetail(mNewsId)
                 .doOnSubscribe(new Action0() {
                     @Override
