@@ -2,6 +2,7 @@ package com.qinmr.mvp.ui.photo.welfare;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.qinmr.mvp.ui.base.IBasePresenter;
 import com.qinmr.mvp.ui.base.ILoadDataView;
 import com.qinmr.recycler.listener.OnRequestDataListener;
 import com.qinmr.mvp.R;
@@ -16,14 +17,14 @@ import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
+ *
  * Created by mrq on 2017/4/17.
  */
 
-public class WelfareListFragment extends BaseFragment implements ILoadDataView<List<WelfarePhotoInfo>> {
+public class WelfareListFragment extends BaseFragment<IBasePresenter> implements ILoadDataView<List<WelfarePhotoInfo>> {
 
     @BindView(R.id.rv_photo_list)
     RecyclerView mRvPhotoList;
-    private WelfareListHelper helper;
     private WelfarePhotoAdapter mAdapter;
 
     @Override
@@ -33,7 +34,7 @@ public class WelfareListFragment extends BaseFragment implements ILoadDataView<L
 
     @Override
     public void initData() {
-        helper = new WelfareListHelper(this);
+        mPresenter = new WelfareListPensenter(this);
     }
 
     @Override
@@ -43,14 +44,14 @@ public class WelfareListFragment extends BaseFragment implements ILoadDataView<L
         mAdapter.setRequestDataListener(new OnRequestDataListener() {
             @Override
             public void onLoadMore() {
-                helper.getMoreData();
+                mPresenter.getMoreData();
             }
         });
     }
 
     @Override
     public void updateViews(boolean isRefresh) {
-        helper.getData();
+        mPresenter.getData(isRefresh);
     }
 
     @Override

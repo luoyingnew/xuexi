@@ -1,6 +1,7 @@
 package com.qinmr.mvp.api;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.qinmr.mvp.App;
 import com.qinmr.mvp.api.bean.NewsDetailInfo;
@@ -8,6 +9,10 @@ import com.qinmr.mvp.api.bean.NewsInfo;
 import com.qinmr.mvp.api.bean.PhotoInfo;
 import com.qinmr.mvp.api.bean.PhotoSetInfo;
 import com.qinmr.mvp.api.bean.SpecialInfo;
+import com.qinmr.mvp.api.bean.WelfarePhotoInfo;
+import com.qinmr.mvp.api.bean.WelfarePhotoList;
+import com.qinmr.mvp.db.table.BeautyPhotoInfo;
+import com.qinmr.mvp.db.table.VideoInfo;
 import com.qinmr.mvp.util.NetUtil;
 import com.qinmr.mvp.util.StringUtils;
 import com.qinmr.utillibrary.logger.KLog;
@@ -239,90 +244,90 @@ public class RetrofitService {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-//    /**
-//     * 获取更多图片列表
-//     * @return
-//     */
-//    public static Observable<List<PhotoInfo>> getPhotoMoreList(String setId) {
-//        return sNewsService.getPhotoMoreList(setId)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread());
-//    }
-//
-//    /**
-//     * 获取美女图片
-//     * 注: 因为网易这个原接口参数一大堆，我只传了部分参数，返回的数据会出现图片重复的情况，请不要在意这个问题- -
-//     * @return
-//     */
-//    public static Observable<List<BeautyPhotoInfo>> getBeautyPhoto(int page) {
-//        return sNewsService.getBeautyPhoto(page * INCREASE_PAGE)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(_flatMapPhotos());
-//    }
-//
-//    /**
-//     * 获取福利图片
-//     * @return
-//     */
-//    public static Observable<WelfarePhotoInfo> getWelfarePhoto(int page) {
-//        return sWelfareService.getWelfarePhoto(page)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(_flatMapWelfarePhotos());
-//    }
-//
-//    /**
-//     * 获取视频列表
-//     * @return
-//     */
-//    public static Observable<List<VideoInfo>> getVideoList(String videoId, int page) {
-//        return sNewsService.getVideoList(videoId, page * INCREASE_PAGE / 2)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .flatMap(_flatMapVideo(videoId));
-//    }
-//
-//    /******************************************* 转换器 **********************************************/
-//
-//    /**
-//     * 转换器，因为 Key 是动态变动，所以用这种不太合适
-//     * @param <T>
-//     */
-//    @Deprecated
-//    public static class FlatMapTransformer<T> implements Observable.Transformer<Map<String, List<T>>, T> {
-//
-//        private String mMapKey;
-//
-//        public FlatMapTransformer<T> setMapKey(String mapKey) {
-//            mMapKey = mapKey;
-//            return this;
-//        }
-//
-//        @Override
-//        public Observable<T> call(Observable<Map<String, List<T>>> mapObservable) {
-//            return  mapObservable.flatMap(new Func1<Map<String, List<T>>, Observable<T>>() {
-//                @Override
-//                public Observable<T> call(Map<String, List<T>> stringListMap) {
-//                    if (TextUtils.isEmpty(mMapKey)) {
-//                        return Observable.error(new Throwable("Map Key is empty"));
-//                    }
-//                    return Observable.from(stringListMap.get(mMapKey));
-//                }
-//            }).subscribeOn(Schedulers.io())
-//                    .unsubscribeOn(Schedulers.io())
-//                    .subscribeOn(AndroidSchedulers.mainThread())
-//                    .observeOn(AndroidSchedulers.mainThread());
-//        }
-//    }
+    /**
+     * 获取更多图片列表
+     * @return
+     */
+    public static Observable<List<PhotoInfo>> getPhotoMoreList(String setId) {
+        return sNewsService.getPhotoMoreList(setId)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    /**
+     * 获取美女图片
+     * 注: 因为网易这个原接口参数一大堆，我只传了部分参数，返回的数据会出现图片重复的情况，请不要在意这个问题- -
+     * @return
+     */
+    public static Observable<List<BeautyPhotoInfo>> getBeautyPhoto(int page) {
+        return sNewsService.getBeautyPhoto(page * INCREASE_PAGE)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(_flatMapPhotos());
+    }
+
+    /**
+     * 获取福利图片
+     * @return
+     */
+    public static Observable<WelfarePhotoInfo> getWelfarePhoto(int page) {
+        return sWelfareService.getWelfarePhoto(page)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(_flatMapWelfarePhotos());
+    }
+
+    /**
+     * 获取视频列表
+     * @return
+     */
+    public static Observable<List<VideoInfo>> getVideoList(String videoId, int page) {
+        return sNewsService.getVideoList(videoId, page * INCREASE_PAGE / 2)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(_flatMapVideo(videoId));
+    }
+
+    /******************************************* 转换器 **********************************************/
+
+    /**
+     * 转换器，因为 Key 是动态变动，所以用这种不太合适
+     * @param <T>
+     */
+    @Deprecated
+    public static class FlatMapTransformer<T> implements Observable.Transformer<Map<String, List<T>>, T> {
+
+        private String mMapKey;
+
+        public FlatMapTransformer<T> setMapKey(String mapKey) {
+            mMapKey = mapKey;
+            return this;
+        }
+
+        @Override
+        public Observable<T> call(Observable<Map<String, List<T>>> mapObservable) {
+            return  mapObservable.flatMap(new Func1<Map<String, List<T>>, Observable<T>>() {
+                @Override
+                public Observable<T> call(Map<String, List<T>> stringListMap) {
+                    if (TextUtils.isEmpty(mMapKey)) {
+                        return Observable.error(new Throwable("Map Key is empty"));
+                    }
+                    return Observable.from(stringListMap.get(mMapKey));
+                }
+            }).subscribeOn(Schedulers.io())
+                    .unsubscribeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread());
+        }
+    }
 
     /**
      * 类型转换
@@ -338,20 +343,20 @@ public class RetrofitService {
         };
     }
 
-//    /**
-//     * 类型转换
-//     * @param typeStr 视频类型
-//     * @return
-//     */
-//    private static Func1<Map<String, List<VideoInfo>>, Observable<List<VideoInfo>>> _flatMapVideo(final String typeStr) {
-//        return new Func1<Map<String, List<VideoInfo>>, Observable<List<VideoInfo>>>() {
-//            @Override
-//            public Observable<List<VideoInfo>> call(Map<String, List<VideoInfo>> newsListMap) {
-//                return Observable.just(newsListMap.get(typeStr));
-//            }
-//        };
-//    }
-//
+    /**
+     * 类型转换
+     * @param typeStr 视频类型
+     * @return
+     */
+    private static Func1<Map<String, List<VideoInfo>>, Observable<List<VideoInfo>>> _flatMapVideo(final String typeStr) {
+        return new Func1<Map<String, List<VideoInfo>>, Observable<List<VideoInfo>>>() {
+            @Override
+            public Observable<List<VideoInfo>> call(Map<String, List<VideoInfo>> newsListMap) {
+                return Observable.just(newsListMap.get(typeStr));
+            }
+        };
+    }
+
     /**
      * 类型转换
      * @param specialId 专题id
@@ -366,32 +371,32 @@ public class RetrofitService {
         };
     }
 
-//    /**
-//     * 类型转换
-//     * @return
-//     */
-//    private static Func1<Map<String, List<BeautyPhotoInfo>>, Observable<List<BeautyPhotoInfo>>> _flatMapPhotos() {
-//        return new Func1<Map<String, List<BeautyPhotoInfo>>, Observable<List<BeautyPhotoInfo>>>() {
-//            @Override
-//            public Observable<List<BeautyPhotoInfo>> call(Map<String, List<BeautyPhotoInfo>> newsListMap) {
-//                return Observable.just(newsListMap.get("美女"));
-//            }
-//        };
-//    }
-//
-//    /**
-//     * 类型转换
-//     * @return
-//     */
-//    private static Func1<WelfarePhotoList, Observable<WelfarePhotoInfo>> _flatMapWelfarePhotos() {
-//        return new Func1<WelfarePhotoList, Observable<WelfarePhotoInfo>>() {
-//            @Override
-//            public Observable<WelfarePhotoInfo> call(WelfarePhotoList welfarePhotoList) {
-//                if (welfarePhotoList.getResults().size() == 0) {
-//                    return Observable.empty();
-//                }
-//                return Observable.from(welfarePhotoList.getResults());
-//            }
-//        };
-//    }
+    /**
+     * 类型转换
+     * @return
+     */
+    private static Func1<Map<String, List<BeautyPhotoInfo>>, Observable<List<BeautyPhotoInfo>>> _flatMapPhotos() {
+        return new Func1<Map<String, List<BeautyPhotoInfo>>, Observable<List<BeautyPhotoInfo>>>() {
+            @Override
+            public Observable<List<BeautyPhotoInfo>> call(Map<String, List<BeautyPhotoInfo>> newsListMap) {
+                return Observable.just(newsListMap.get("美女"));
+            }
+        };
+    }
+
+    /**
+     * 类型转换
+     * @return
+     */
+    private static Func1<WelfarePhotoList, Observable<WelfarePhotoInfo>> _flatMapWelfarePhotos() {
+        return new Func1<WelfarePhotoList, Observable<WelfarePhotoInfo>>() {
+            @Override
+            public Observable<WelfarePhotoInfo> call(WelfarePhotoList welfarePhotoList) {
+                if (welfarePhotoList.getResults().size() == 0) {
+                    return Observable.empty();
+                }
+                return Observable.from(welfarePhotoList.getResults());
+            }
+        };
+    }
 }
