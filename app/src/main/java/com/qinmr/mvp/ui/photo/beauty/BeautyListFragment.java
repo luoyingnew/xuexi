@@ -27,7 +27,6 @@ public class BeautyListFragment extends BaseFragment implements ILoadDataView<Li
     ImageView mIvTransitionPhoto;
 
     BeautyPhotosAdapter mAdapter;
-    private BeautyListHelper helper;
 
     @Override
     public int attachLayoutRes() {
@@ -36,7 +35,7 @@ public class BeautyListFragment extends BaseFragment implements ILoadDataView<Li
 
     @Override
     public void initData() {
-        helper = new BeautyListHelper(this);
+        mPresenter = new BeautyListPresenter(this);
     }
 
     @Override
@@ -46,14 +45,14 @@ public class BeautyListFragment extends BaseFragment implements ILoadDataView<Li
         mAdapter.setRequestDataListener(new OnRequestDataListener() {
             @Override
             public void onLoadMore() {
-                helper.getMoreData();
+                mPresenter.getMoreData();
             }
         });
     }
 
     @Override
     public void updateViews(boolean isRefresh) {
-        helper.getData();
+        mPresenter.getData(isRefresh);
     }
 
     @Override

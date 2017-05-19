@@ -6,13 +6,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.qinmr.recycler.adapter.BaseAdapter;
-import com.qinmr.recycler.adapter.BaseViewHolder;
 import com.qinmr.mvp.R;
-import com.qinmr.mvp.api.bean.WelfarePhotoInfo;
+import com.qinmr.mvp.db.table.WelfarePhotoInfo;
+import com.qinmr.mvp.ui.photo.bigphoto.BigPhotoActivity;
 import com.qinmr.mvp.util.DefIconFactory;
 import com.qinmr.mvp.util.StringUtils;
+import com.qinmr.recycler.adapter.BaseAdapter;
+import com.qinmr.recycler.adapter.BaseViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +59,7 @@ public class WelfarePhotoAdapter extends BaseAdapter<WelfarePhotoInfo> {
             @Override
             public void onClick(View v) {
 //                ToastUtils.showToast("这里没有做大图显示处理，请参考美图界面");
+                BigPhotoActivity.launch(mContext,(ArrayList<WelfarePhotoInfo>)getData(),holder.getAdapterPosition());
             }
         });
     }

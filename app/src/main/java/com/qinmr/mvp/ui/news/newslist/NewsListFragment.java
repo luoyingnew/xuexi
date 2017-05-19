@@ -96,7 +96,7 @@ public class NewsListFragment extends BaseFragment implements INewsListView {
 
     @Override
     public void loadHeadData(NewsInfo o) {
-        addHeadView(o);
+//        addHeadView(o);
     }
 
     @Override

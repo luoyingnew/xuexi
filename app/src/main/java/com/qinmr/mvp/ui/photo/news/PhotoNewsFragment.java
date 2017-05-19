@@ -2,6 +2,7 @@ package com.qinmr.mvp.ui.photo.news;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.qinmr.mvp.ui.base.IBasePresenter;
 import com.qinmr.mvp.ui.base.ILoadDataView;
 import com.qinmr.recycler.listener.OnRequestDataListener;
 import com.qinmr.mvp.R;
@@ -19,12 +20,11 @@ import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
  * Created by mrq on 2017/4/17.
  */
 
-public class PhotoNewsFragment extends BaseFragment implements ILoadDataView<List<PhotoInfo>> {
+public class PhotoNewsFragment extends BaseFragment<IBasePresenter> implements ILoadDataView<List<PhotoInfo>> {
 
     @BindView(R.id.rv_photo_list)
     RecyclerView mRvPhotoList;
 
-    private PhotoNewsHelper helper;
     private PhotoListAdapter mAdapter;
 
     @Override
@@ -34,7 +34,7 @@ public class PhotoNewsFragment extends BaseFragment implements ILoadDataView<Lis
 
     @Override
     public void initData() {
-        helper = new PhotoNewsHelper(this);
+        mPresenter = new PhotoNewsPensenter(this);
     }
 
     @Override
@@ -44,14 +44,14 @@ public class PhotoNewsFragment extends BaseFragment implements ILoadDataView<Lis
         mAdapter.setRequestDataListener(new OnRequestDataListener() {
             @Override
             public void onLoadMore() {
-                helper.getMoreData();
+                mPresenter.getMoreData();
             }
         });
     }
 
     @Override
     public void updateViews(boolean isRefresh) {
-        helper.getData();
+        mPresenter.getData(isRefresh);
     }
 
     @Override
@@ -67,6 +67,6 @@ public class PhotoNewsFragment extends BaseFragment implements ILoadDataView<Lis
 
     @Override
     public void loadNoData() {
-
+        mAdapter.noMoreData();
     }
 }

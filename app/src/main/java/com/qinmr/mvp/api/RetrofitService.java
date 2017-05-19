@@ -9,7 +9,7 @@ import com.qinmr.mvp.api.bean.NewsInfo;
 import com.qinmr.mvp.api.bean.PhotoInfo;
 import com.qinmr.mvp.api.bean.PhotoSetInfo;
 import com.qinmr.mvp.api.bean.SpecialInfo;
-import com.qinmr.mvp.api.bean.WelfarePhotoInfo;
+import com.qinmr.mvp.db.table.WelfarePhotoInfo;
 import com.qinmr.mvp.api.bean.WelfarePhotoList;
 import com.qinmr.mvp.db.table.BeautyPhotoInfo;
 import com.qinmr.mvp.db.table.VideoInfo;

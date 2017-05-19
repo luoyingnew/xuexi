@@ -3,6 +3,7 @@ package com.qinmr.mvp.ui.video.list;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
+import com.qinmr.mvp.ui.base.IBasePresenter;
 import com.qinmr.recycler.adapter.BaseAdapter;
 import com.qinmr.mvp.ui.base.ILoadDataView;
 import com.qinmr.recycler.listener.OnRequestDataListener;
@@ -21,7 +22,7 @@ import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
  * Created by mrq on 2017/4/25.
  */
 
-public class VideoListFragment extends BaseFragment implements ILoadDataView<List<VideoInfo>> {
+public class VideoListFragment extends BaseFragment<IBasePresenter> implements ILoadDataView<List<VideoInfo>> {
 
     private static final String VIDEO_ID_KEY = "VideoIdKey";
 
@@ -29,7 +30,6 @@ public class VideoListFragment extends BaseFragment implements ILoadDataView<Lis
     RecyclerView mRvPhotoList;
 
     private String mVideoId;
-    private VideoListHelper helper;
     private BaseAdapter mAdapter;
 
     public static VideoListFragment newInstance(String videoId) {
@@ -49,7 +49,7 @@ public class VideoListFragment extends BaseFragment implements ILoadDataView<Lis
     public void initData() {
         if (getArguments() != null) {
             mVideoId = getArguments().getString(VIDEO_ID_KEY);
-            helper = new VideoListHelper(this, mVideoId);
+            mPresenter = new VideoListPensenter(this, mVideoId);
         }
     }
 
@@ -61,14 +61,14 @@ public class VideoListFragment extends BaseFragment implements ILoadDataView<Lis
         mAdapter.setRequestDataListener(new OnRequestDataListener() {
             @Override
             public void onLoadMore() {
-                helper.getMoreData();
+                mPresenter.getMoreData();
             }
         });
     }
 
     @Override
     public void updateViews(boolean isRefresh) {
-        helper.getData();
+        mPresenter.getData(isRefresh);
     }
 
     @Override

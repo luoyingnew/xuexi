@@ -1,5 +1,7 @@
 package com.qinmr.mvp.api.bean;
 
+import com.qinmr.mvp.db.table.WelfarePhotoInfo;
+
 import java.util.List;
 
 /**

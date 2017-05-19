@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.qinmr.recycler.adapter.BaseAdapter;
-import com.qinmr.recycler.adapter.BaseViewHolder;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.db.table.BeautyPhotoInfo;
-import com.qinmr.mvp.ui.photo.bigphoto.BigPhotoActivity;
 import com.qinmr.mvp.util.DefIconFactory;
 import com.qinmr.mvp.util.StringUtils;
+import com.qinmr.recycler.adapter.BaseAdapter;
+import com.qinmr.recycler.adapter.BaseViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,9 +62,9 @@ public class BeautyPhotosAdapter extends BaseAdapter<BeautyPhotoInfo> {
             @Override
             public void onClick(View v) {
                 if (mFragment != null) {
-                    BigPhotoActivity.launchForResult(mFragment, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
+//                    BigPhotoActivity.launchForResult(mFragment, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
                 } else {
-                    BigPhotoActivity.launch(mContext, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
+//                    BigPhotoActivity.launch(mContext, (ArrayList<BeautyPhotoInfo>) getData(), holder.getAdapterPosition());
                 }
             }
         });

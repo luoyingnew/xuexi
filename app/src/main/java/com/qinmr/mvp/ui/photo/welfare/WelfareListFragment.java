@@ -7,7 +7,7 @@ import com.qinmr.mvp.ui.base.ILoadDataView;
 import com.qinmr.recycler.listener.OnRequestDataListener;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.WelfarePhotoAdapter;
-import com.qinmr.mvp.api.bean.WelfarePhotoInfo;
+import com.qinmr.mvp.db.table.WelfarePhotoInfo;
 import com.qinmr.mvp.helper.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseFragment;
 

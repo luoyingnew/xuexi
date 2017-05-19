@@ -2,13 +2,13 @@ package com.qinmr.mvp;
 
 import android.app.Application;
 
-import com.lzy.okgo.OkGo;
 import com.qinmr.mvp.api.RetrofitService;
 import com.qinmr.mvp.db.NewsTypeDao;
 import com.qinmr.mvp.db.table.DaoMaster;
 import com.qinmr.mvp.db.table.DaoSession;
 import com.qinmr.mvp.rxbus.RxBus;
 import com.qinmr.utillibrary.logger.KLog;
+import com.squareup.leakcanary.LeakCanary;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -41,15 +41,13 @@ public class App extends Application {
         KLog.init(BuildConfig.LOG_DEBUG);
 //        AutoLayoutConifg.getInstance().useDeviceSize();
         RetrofitService.init();
-        OkGo.init(this);
+        LeakCanary.install(this);
     }
 
     /**
      * 初始化数据
      */
     private void initDatabase() {
-        //存入sqlite
-        NewsTypeDao.updateLocalData(sContext);
         //存入greenDao
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getContext(), DB_NAME);
         Database database = helper.getWritableDb();
