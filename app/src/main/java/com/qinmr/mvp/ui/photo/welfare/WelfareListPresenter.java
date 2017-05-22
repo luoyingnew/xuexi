@@ -20,13 +20,13 @@ import rx.schedulers.Schedulers;
  * Created by mrq on 2017/5/18.
  */
 
-public class WelfareListPensenter implements IBasePresenter {
+public class WelfareListPresenter implements IBasePresenter {
 
     private WelfareListFragment mView;
 
     private int mPage = 1;
 
-    public WelfareListPensenter(WelfareListFragment mView) {
+    public WelfareListPresenter(WelfareListFragment mView) {
         this.mView = mView;
     }
 

@@ -4,6 +4,7 @@ import com.qinmr.mvp.api.RetrofitService;
 import com.qinmr.mvp.db.table.WelfarePhotoInfo;
 import com.qinmr.mvp.db.table.WelfarePhotoInfoDao;
 import com.qinmr.mvp.rxbus.RxBus;
+import com.qinmr.mvp.rxbus.event.LoveEvent;
 import com.qinmr.mvp.ui.base.ILocalPresenter;
 import com.qinmr.mvp.util.ImageLoader;
 import com.qinmr.utillibrary.logger.KLog;
@@ -23,22 +24,22 @@ import rx.schedulers.Schedulers;
  * Created by mrq on 2017/5/19.
  */
 
-public class BigPhotoPensenter implements ILocalPresenter<WelfarePhotoInfo> {
+public class BigPhotoPresenter implements ILocalPresenter<WelfarePhotoInfo> {
 
     private final BigPhotoActivity mView;
     private final List<WelfarePhotoInfo> mPhotoList;
-    private final WelfarePhotoInfoDao mDao;
+    private final WelfarePhotoInfoDao mDbDao;
     private final RxBus mRxBus;
-//    private List<WelfarePhotoInfo> mDbLovedData;
+    private List<WelfarePhotoInfo> mDbLovedData;
 
     private int mPage = 1;
 
-    public BigPhotoPensenter(BigPhotoActivity activity, List<WelfarePhotoInfo> mPhotoList, WelfarePhotoInfoDao newsTypeInfoDao, RxBus mRxBus) {
+    public BigPhotoPresenter(BigPhotoActivity activity, List<WelfarePhotoInfo> mPhotoList, WelfarePhotoInfoDao newsTypeInfoDao, RxBus mRxBus) {
         this.mView = activity;
         this.mPhotoList = mPhotoList;
-        this.mDao = newsTypeInfoDao;
+        this.mDbDao = newsTypeInfoDao;
         this.mRxBus = mRxBus;
-//        mDbLovedData = newsTypeInfoDao.queryBuilder().list();
+        mDbLovedData = newsTypeInfoDao.queryBuilder().list();
     }
 
     @Override
@@ -105,12 +106,27 @@ public class BigPhotoPensenter implements ILocalPresenter<WelfarePhotoInfo> {
 
     @Override
     public void insert(WelfarePhotoInfo data) {
-
+        KLog.w(mDbLovedData.contains(data));
+        if (mDbLovedData.contains(data)) {
+            mDbDao.update(data);
+        } else {
+            mDbDao.insert(data);
+            mDbLovedData.add(data);
+        }
+        KLog.e(data.getIsLove());
+        KLog.e(data.isPraise());
+        mRxBus.post(new LoveEvent());
     }
 
     @Override
     public void delete(WelfarePhotoInfo data) {
-
+        if (!data.isLove() && !data.isDownload() && !data.isPraise()) {
+            mDbDao.delete(data);
+            mDbLovedData.remove(data);
+        } else {
+            mDbDao.update(data);
+        }
+        mRxBus.post(new LoveEvent());
     }
 
     @Override
@@ -129,12 +145,15 @@ public class BigPhotoPensenter implements ILocalPresenter<WelfarePhotoInfo> {
                         @Override
                         public void call(WelfarePhotoInfo bean) {
                             // 判断数据库是否有数据，有则设置对应参数
-//                            if (mDbLovedData.contains(bean)) {
-//                                tmpBean = mDbLovedData.get(mDbLovedData.indexOf(bean));
-//                                bean.setLove(tmpBean.isLove());
-//                                bean.setPraise(tmpBean.isPraise());
-//                                bean.setDownload(tmpBean.isDownload());
-//                            }
+                            KLog.e(mDbLovedData.size());
+                            if (mDbLovedData.contains(bean)) {
+                                tmpBean = mDbLovedData.get(mDbLovedData.indexOf(bean));
+                                bean.setLove(tmpBean.isLove());
+                                KLog.e(tmpBean.isLove());
+                                bean.setPraise(tmpBean.isPraise());
+                                KLog.e(tmpBean.isPraise());
+                                bean.setDownload(tmpBean.isDownload());
+                            }
                         }
                     })
                     .toList()

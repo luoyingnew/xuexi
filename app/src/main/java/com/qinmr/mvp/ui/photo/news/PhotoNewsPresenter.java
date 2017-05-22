@@ -15,12 +15,12 @@ import rx.functions.Action0;
  * Created by mrq on 2017/5/19.
  */
 
-public class PhotoNewsPensenter implements IBasePresenter {
+public class PhotoNewsPresenter implements IBasePresenter {
 
     private String mNextSetId;
     private final ILoadDataView mView;
 
-    public PhotoNewsPensenter(ILoadDataView mView) {
+    public PhotoNewsPresenter(ILoadDataView mView) {
         this.mView = mView;
     }
 

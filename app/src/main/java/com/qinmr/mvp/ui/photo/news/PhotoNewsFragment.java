@@ -8,7 +8,7 @@ import com.qinmr.recycler.listener.OnRequestDataListener;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.PhotoListAdapter;
 import com.qinmr.mvp.api.bean.PhotoInfo;
-import com.qinmr.mvp.helper.RecyclerViewHelper;
+import com.qinmr.mvp.util.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseFragment;
 
 import java.util.List;
@@ -17,6 +17,7 @@ import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
+ * 生活
  * Created by mrq on 2017/4/17.
  */
 
@@ -34,7 +35,7 @@ public class PhotoNewsFragment extends BaseFragment<IBasePresenter> implements I
 
     @Override
     public void initData() {
-        mPresenter = new PhotoNewsPensenter(this);
+        mPresenter = new PhotoNewsPresenter(this);
     }
 
     @Override

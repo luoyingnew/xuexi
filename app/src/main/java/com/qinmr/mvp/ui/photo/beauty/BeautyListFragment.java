@@ -8,7 +8,7 @@ import com.qinmr.recycler.listener.OnRequestDataListener;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.BeautyPhotosAdapter;
 import com.qinmr.mvp.db.table.BeautyPhotoInfo;
-import com.qinmr.mvp.helper.RecyclerViewHelper;
+import com.qinmr.mvp.util.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseFragment;
 
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
+ * 美女  接口失效  页面加载不出来
  * Created by mrq on 2017/4/17.
  */
 
