@@ -65,7 +65,7 @@ public class PhotoSetActivity extends BaseActivity implements IPhotoSetView {
     @Override
     public void initData() {
         mPhotoSetId = getIntent().getStringExtra(PHOTO_SET_KEY);
-        mPresenter = new PhotoSetPensenter(this,mPhotoSetId);
+        mPresenter = new PhotoSetPresenter(this,mPhotoSetId);
     }
 
     @Override

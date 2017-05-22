@@ -11,7 +11,7 @@ import android.view.View;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.ManageAdapter;
 import com.qinmr.mvp.db.table.NewsTypeInfo;
-import com.qinmr.mvp.helper.RecyclerViewHelper;
+import com.qinmr.mvp.util.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseActivity;
 import com.qinmr.recycler.listener.OnRecyclerViewItemClickListener;
 import com.qinmr.recycler.listener.OnRemoveDataListener;

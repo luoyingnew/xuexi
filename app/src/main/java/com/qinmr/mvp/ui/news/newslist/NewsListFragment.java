@@ -11,7 +11,7 @@ import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.NewsMultiListAdapter;
 import com.qinmr.mvp.adapter.item.NewsMultiItem;
 import com.qinmr.mvp.api.bean.NewsInfo;
-import com.qinmr.mvp.helper.RecyclerViewHelper;
+import com.qinmr.mvp.util.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseFragment;
 import com.qinmr.mvp.util.SliderHelper;
 import com.qinmr.recycler.listener.OnRequestDataListener;

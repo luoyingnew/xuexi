@@ -12,12 +12,12 @@ import rx.functions.Action0;
  * Created by mrq on 2017/5/17.
  */
 
-public class PhotoSetPensenter implements IBasePresenter {
+public class PhotoSetPresenter implements IBasePresenter {
 
     private final IPhotoSetView mView;
     private final String mPhotoSetId;
 
-    public PhotoSetPensenter(IPhotoSetView mView, String mPhotoSetId) {
+    public PhotoSetPresenter(IPhotoSetView mView, String mPhotoSetId) {
         this.mView = mView;
         this.mPhotoSetId = mPhotoSetId;
     }

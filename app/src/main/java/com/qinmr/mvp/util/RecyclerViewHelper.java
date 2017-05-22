@@ -1,4 +1,4 @@
-package com.qinmr.mvp.helper;
+package com.qinmr.mvp.util;
 
 import android.content.Context;
 import android.graphics.Color;

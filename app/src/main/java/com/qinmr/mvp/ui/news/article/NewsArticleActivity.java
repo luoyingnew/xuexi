@@ -93,7 +93,7 @@ public class NewsArticleActivity extends BaseSwipeBackActivity implements INewsA
     @Override
     public void initData() {
         mNewsId = getIntent().getStringExtra(NEWS_ID_KEY);
-        mPresenter = new NewsArticlePensenter(this,mNewsId);
+        mPresenter = new NewsArticlePresenter(this,mNewsId);
     }
 
     @Override

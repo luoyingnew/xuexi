@@ -1,8 +1,5 @@
 package com.qinmr.mvp.db.table;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -13,7 +10,7 @@ import java.io.Serializable;
  * Created by long on 2016/10/10.
  */
 @Entity
-public class WelfarePhotoInfo implements Serializable, Parcelable {
+public class WelfarePhotoInfo implements Serializable {
 
     /**
      * _id : 57facc74421aa95de3b8ab6b
@@ -27,8 +24,7 @@ public class WelfarePhotoInfo implements Serializable, Parcelable {
      * who : daimajia
      */
     @Id(autoincrement = true)
-    private Long idd;
-    private String id;
+    private Long id;
     private String createdAt;
     private String desc;
     private String publishedAt;
@@ -47,27 +43,11 @@ public class WelfarePhotoInfo implements Serializable, Parcelable {
     // 下载
     private boolean isDownload;
 
-    protected WelfarePhotoInfo(Parcel in) {
-        id = in.readString();
-        createdAt = in.readString();
-        desc = in.readString();
-        publishedAt = in.readString();
-        source = in.readString();
-        type = in.readString();
-        url = in.readString();
-        used = in.readByte() != 0;
-        who = in.readString();
-        pixel = in.readString();
-        isLove = in.readByte() != 0;
-        isPraise = in.readByte() != 0;
-        isDownload = in.readByte() != 0;
-    }
-
-    @Generated(hash = 821300839)
-    public WelfarePhotoInfo(Long idd, String id, String createdAt, String desc,
-            String publishedAt, String source, String type, String url, boolean used,
-            String who, String pixel, boolean isLove, boolean isPraise, boolean isDownload) {
-        this.idd = idd;
+    @Generated(hash = 1691390620)
+    public WelfarePhotoInfo(Long id, String createdAt, String desc,
+            String publishedAt, String source, String type, String url,
+            boolean used, String who, String pixel, boolean isLove,
+            boolean isPraise, boolean isDownload) {
         this.id = id;
         this.createdAt = createdAt;
         this.desc = desc;
@@ -87,23 +67,10 @@ public class WelfarePhotoInfo implements Serializable, Parcelable {
     public WelfarePhotoInfo() {
     }
 
-    public static final Creator<WelfarePhotoInfo> CREATOR = new Creator<WelfarePhotoInfo>() {
-        @Override
-        public WelfarePhotoInfo createFromParcel(Parcel in) {
-            return new WelfarePhotoInfo(in);
-        }
-
-        @Override
-        public WelfarePhotoInfo[] newArray(int size) {
-            return new WelfarePhotoInfo[size];
-        }
-    };
-
     @Override
     public String toString() {
         return "WelfarePhotoInfo{" +
-                "idd=" + idd +
-                ", id='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", desc='" + desc + '\'' +
                 ", publishedAt='" + publishedAt + '\'' +
@@ -119,19 +86,11 @@ public class WelfarePhotoInfo implements Serializable, Parcelable {
                 '}';
     }
 
-    public Long getIdd() {
-        return idd;
-    }
-
-    public void setIdd(Long idd) {
-        this.idd = idd;
-    }
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -229,28 +188,6 @@ public class WelfarePhotoInfo implements Serializable, Parcelable {
 
     public void setDownload(boolean download) {
         isDownload = download;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(createdAt);
-        dest.writeString(desc);
-        dest.writeString(publishedAt);
-        dest.writeString(source);
-        dest.writeString(type);
-        dest.writeString(url);
-        dest.writeByte((byte) (used ? 1 : 0));
-        dest.writeString(who);
-        dest.writeString(pixel);
-        dest.writeByte((byte) (isLove ? 1 : 0));
-        dest.writeByte((byte) (isPraise ? 1 : 0));
-        dest.writeByte((byte) (isDownload ? 1 : 0));
     }
 
     public boolean getIsDownload() {

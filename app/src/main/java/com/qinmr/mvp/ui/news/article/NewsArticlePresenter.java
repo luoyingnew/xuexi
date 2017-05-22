@@ -14,14 +14,14 @@ import rx.functions.Action1;
  * Created by mrq on 2017/5/17.
  */
 
-public class NewsArticlePensenter implements IBasePresenter {
+public class NewsArticlePresenter implements IBasePresenter {
 
     private static final String HTML_IMG_TEMPLATE = "<img src=\"http\" />";
 
     private final INewsArticleView mView;
     private final String mNewsId;
 
-    public NewsArticlePensenter(INewsArticleView mView, String mNewsId) {
+    public NewsArticlePresenter(INewsArticleView mView, String mNewsId) {
         this.mView = mView;
         this.mNewsId = mNewsId;
     }

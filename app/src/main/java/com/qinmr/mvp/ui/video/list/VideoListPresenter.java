@@ -15,14 +15,14 @@ import rx.functions.Action0;
  * Created by mrq on 2017/5/19.
  */
 
-public class VideoListPensenter implements IBasePresenter {
+public class VideoListPresenter implements IBasePresenter {
 
     private final ILoadDataView mView;
     private final String mVideoId;
 
     private int mPage = 0;
 
-    public VideoListPensenter(ILoadDataView mView, String mVideoId) {
+    public VideoListPresenter(ILoadDataView mView, String mVideoId) {
         this.mView = mView;
         this.mVideoId = mVideoId;
     }

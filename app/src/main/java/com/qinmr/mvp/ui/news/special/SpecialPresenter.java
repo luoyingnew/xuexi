@@ -21,13 +21,13 @@ import rx.functions.Func2;
  * Created by mrq on 2017/5/17.
  */
 
-public class SpecialPensenter implements IBasePresenter {
+public class SpecialPresenter implements IBasePresenter {
 
 
     private final ISpecialView mView;
     private final String mSpecialId;
 
-    public SpecialPensenter(ISpecialView mView, String mSpecialId) {
+    public SpecialPresenter(ISpecialView mView, String mSpecialId) {
         this.mView = mView;
         this.mSpecialId = mSpecialId;
     }

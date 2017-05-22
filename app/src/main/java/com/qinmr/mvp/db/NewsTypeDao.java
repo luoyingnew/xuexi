@@ -5,7 +5,7 @@ import android.content.Context;
 import com.qinmr.mvp.db.table.DaoSession;
 import com.qinmr.mvp.db.table.NewsTypeInfo;
 import com.qinmr.mvp.db.table.NewsTypeInfoDao;
-import com.qinmr.mvp.helper.AssetsHelper;
+import com.qinmr.mvp.util.AssetsHelper;
 import com.qinmr.mvp.util.GsonHelper;
 
 import java.util.List;

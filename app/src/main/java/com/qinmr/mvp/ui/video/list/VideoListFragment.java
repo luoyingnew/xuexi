@@ -10,7 +10,7 @@ import com.qinmr.recycler.listener.OnRequestDataListener;
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.VideoListAdapter;
 import com.qinmr.mvp.db.table.VideoInfo;
-import com.qinmr.mvp.helper.RecyclerViewHelper;
+import com.qinmr.mvp.util.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseFragment;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class VideoListFragment extends BaseFragment<IBasePresenter> implements I
     public void initData() {
         if (getArguments() != null) {
             mVideoId = getArguments().getString(VIDEO_ID_KEY);
-            mPresenter = new VideoListPensenter(this, mVideoId);
+            mPresenter = new VideoListPresenter(this, mVideoId);
         }
     }
 

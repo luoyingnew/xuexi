@@ -19,7 +19,7 @@ import com.qinmr.mvp.R;
 import com.qinmr.mvp.adapter.SpecialAdapter;
 import com.qinmr.mvp.adapter.item.SpecialItem;
 import com.qinmr.mvp.api.bean.SpecialInfo;
-import com.qinmr.mvp.helper.RecyclerViewHelper;
+import com.qinmr.mvp.util.RecyclerViewHelper;
 import com.qinmr.mvp.ui.base.BaseSwipeBackActivity;
 import com.qinmr.mvp.util.DefIconFactory;
 import com.qinmr.recycler.adapter.BaseAdapter;
@@ -67,7 +67,7 @@ public class SpecialActivity extends BaseSwipeBackActivity implements ISpecialVi
     @Override
     public void initData() {
         mSpecialId = getIntent().getStringExtra(SPECIAL_KEY);
-        mPresenter = new SpecialPensenter(this, mSpecialId);
+        mPresenter = new SpecialPresenter(this, mSpecialId);
     }
 
     @Override
