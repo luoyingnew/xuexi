@@ -1,5 +1,6 @@
 package com.qinmr.mvp.ui.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -71,6 +72,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     break;
                 case R.id.nav_shop:
 
+                    break;
+                case R.id.nav_share:
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share));
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_content));
+                    startActivity(Intent.createChooser(intent, getTitle()));
                     break;
             }
             mItemId = -1;
