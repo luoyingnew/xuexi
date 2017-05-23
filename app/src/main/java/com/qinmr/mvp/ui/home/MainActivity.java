@@ -6,19 +6,25 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.SwitchCompat;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.qinmr.mvp.R;
 import com.qinmr.mvp.ui.base.BaseActivity;
+import com.qinmr.mvp.ui.base.BaseFragment;
 import com.qinmr.mvp.ui.news.main.NewsMainFragment;
 import com.qinmr.mvp.ui.photo.main.PhotoMainFragment;
 import com.qinmr.mvp.ui.video.main.VideoMainFragment;
+import com.qinmr.mvp.util.SharedPreferencesUtil;
 
 import butterknife.BindView;
 
@@ -32,6 +38,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
+    private boolean mIsChangeTheme;
+
+    private BaseFragment newsMainfragment;
+    private BaseFragment photoMainFragment;
+    private BaseFragment videoMainFragment;
+
     private SparseArray<String> mSparseTags = new SparseArray<>();
     private long mExitTime = 0;
     private int mItemId = -1;
@@ -40,16 +52,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case R.id.nav_news:
-                    replaceFragment(R.id.fl_container, new NewsMainFragment(), mSparseTags.get(R.id.nav_news));
+                    if (null == newsMainfragment) {
+                        newsMainfragment = new NewsMainFragment();
+                    }
+                    replaceFragment(R.id.fl_container, newsMainfragment, mSparseTags.get(R.id.nav_news));
                     break;
                 case R.id.nav_gallery:
-                    replaceFragment(R.id.fl_container, new PhotoMainFragment(), mSparseTags.get(R.id.nav_gallery));
+                    if (null == photoMainFragment) {
+                        photoMainFragment = new PhotoMainFragment();
+                    }
+                    replaceFragment(R.id.fl_container, photoMainFragment, mSparseTags.get(R.id.nav_gallery));
                     break;
                 case R.id.nav_videos:
-                    replaceFragment(R.id.fl_container, new VideoMainFragment(), mSparseTags.get(R.id.nav_videos));
+                    if (null == videoMainFragment) {
+                        videoMainFragment = new VideoMainFragment();
+                    }
+                    replaceFragment(R.id.fl_container, videoMainFragment, mSparseTags.get(R.id.nav_videos));
                     break;
                 case R.id.nav_shop:
-//                    SettingsActivity.launch(HomeActivity.this);
+
                     break;
             }
             mItemId = -1;
@@ -74,6 +95,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mSparseTags.put(R.id.nav_gallery, "Photos");
         mSparseTags.put(R.id.nav_videos, "Videos");
         mSparseTags.put(R.id.nav_shop, "Shop");
+
+        //设置夜间模式
+        MenuItem menuNightMode = mNavView.getMenu().findItem(R.id.nav_night_mode);
+        SwitchCompat dayNightSwitch = (SwitchCompat) MenuItemCompat.getActionView(menuNightMode);
+        //这两行代码如果替换一下位置，会导致盒子关闭会更新UI出现闪动，但是先设置按钮状态，在设置按钮监听就没有这个现象
+        setCheckedState(dayNightSwitch);
+        setCheckedEvent(dayNightSwitch);
     }
 
     @Override
@@ -112,6 +140,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onDrawerClosed(View drawerView) {
                 mHandler.sendEmptyMessage(mItemId);
+
+                if (mIsChangeTheme) {
+                    mIsChangeTheme = false;
+                    getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+                    recreate();
+                }
             }
         });
     }
@@ -155,4 +189,42 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 初始化夜间模式的按钮
+     *
+     * @param dayNightSwitch
+     */
+    private void setCheckedState(SwitchCompat dayNightSwitch) {
+        boolean isNight = SharedPreferencesUtil.getBoolean(mContext, "isNight", false);
+        if (isNight) {
+            dayNightSwitch.setChecked(true);
+            //由于上面描述的现象，没有监听，初始化的时候可能出现模式不对，所以在初始化时候做这个操作
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            dayNightSwitch.setChecked(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    /**
+     * 设置夜间模式的按效果
+     *
+     * @param dayNightSwitch
+     */
+    private void setCheckedEvent(SwitchCompat dayNightSwitch) {
+        dayNightSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    SharedPreferencesUtil.setBoolean(mContext, "isNight", true);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    SharedPreferencesUtil.setBoolean(mContext, "isNight", false);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                mIsChangeTheme = true;
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+    }
 }

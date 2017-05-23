@@ -36,15 +36,18 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
     protected T mPresenter;
     protected RxBus mRxBus = App.getRxBus();
     protected DaoSession mDaoSession = App.getDaoSession();
+    protected Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
+        mContext = this;
         initData();
         initViews();
         updateViews(false);
+
     }
 
     /**

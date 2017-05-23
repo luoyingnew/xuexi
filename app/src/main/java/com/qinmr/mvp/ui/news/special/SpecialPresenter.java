@@ -34,7 +34,6 @@ public class SpecialPresenter implements IBasePresenter {
 
     @Override
     public void getData(boolean isRefresh) {
-        KLog.e(mSpecialId);
         RetrofitService.getSpecial(mSpecialId)
                 .doOnSubscribe(new Action0() {
                     @Override

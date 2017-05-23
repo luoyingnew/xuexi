@@ -106,15 +106,12 @@ public class BigPhotoPresenter implements ILocalPresenter<WelfarePhotoInfo> {
 
     @Override
     public void insert(WelfarePhotoInfo data) {
-        KLog.w(mDbLovedData.contains(data));
         if (mDbLovedData.contains(data)) {
             mDbDao.update(data);
         } else {
             mDbDao.insert(data);
             mDbLovedData.add(data);
         }
-        KLog.e(data.getIsLove());
-        KLog.e(data.isPraise());
         mRxBus.post(new LoveEvent());
     }
 
@@ -145,13 +142,10 @@ public class BigPhotoPresenter implements ILocalPresenter<WelfarePhotoInfo> {
                         @Override
                         public void call(WelfarePhotoInfo bean) {
                             // 判断数据库是否有数据，有则设置对应参数
-                            KLog.e(mDbLovedData.size());
                             if (mDbLovedData.contains(bean)) {
                                 tmpBean = mDbLovedData.get(mDbLovedData.indexOf(bean));
                                 bean.setLove(tmpBean.isLove());
-                                KLog.e(tmpBean.isLove());
                                 bean.setPraise(tmpBean.isPraise());
-                                KLog.e(tmpBean.isPraise());
                                 bean.setDownload(tmpBean.isDownload());
                             }
                         }
